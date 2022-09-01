@@ -1,0 +1,319 @@
+<template>
+  <el-row>
+    <!-- <el-form-item label="字段名">
+      <el-input v-model="activeData.__vModel__" placeholder="请输入字段名" readonly />
+    </el-form-item> -->
+    <el-form-item label="标题名">
+      <el-input v-model="activeData.__config__.label" placeholder="请输入标题名" />
+    </el-form-item>
+    <el-form-item label="控件栅格">
+      <el-slider v-model="activeData.__config__.span" :max="24" :min="6" show-stops :step="2"
+        show-tooltip />
+    </el-form-item>
+    <el-form-item label="标题宽度">
+      <el-input v-model.number="activeData.__config__.labelWidth" type="number"
+        placeholder="请输入标题宽度" />
+    </el-form-item>
+    <el-form-item label="默认值">
+      <el-checkbox-group v-model="activeData.__config__.defaultValue" :min="activeData.min"
+        :max="activeData.max">
+        <el-checkbox :label="item[activeData.__config__.props.value]"
+          v-for="(item,i) in activeData.__slot__.options" :key="i">
+          {{item[activeData.__config__.props.label]}}</el-checkbox>
+      </el-checkbox-group>
+    </el-form-item>
+    <el-form-item label="至少应选">
+      <el-input-number :value="activeData.min" :min="0" placeholder="至少应选"
+        @input="$set(activeData, 'min', $event?$event:undefined)" />
+    </el-form-item>
+    <el-form-item label="最多可选">
+      <el-input-number :value="activeData.max" :min="0" placeholder="最多可选"
+        @input="$set(activeData, 'max', $event?$event:undefined)" />
+    </el-form-item>
+    <el-divider>选项</el-divider>
+    <el-form-item label="" label-width="40px">
+      <el-radio-group v-model="activeData.__config__.dataType" size="small"
+        style="text-align:center" @change="dataTypeChange">
+        <el-radio-button label="static">静态数据</el-radio-button>
+        <el-radio-button label="dictionary">数据字典</el-radio-button>
+        <el-radio-button label="dynamic">远端数据</el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <template v-if="activeData.__config__.dataType==='static'">
+      <draggable :list="activeData.__slot__.options" :animation="340" group="selectItem"
+        handle=".option-drag">
+        <div v-for="(item, index) in activeData.__slot__.options" :key="index" class="select-item">
+          <div class="select-line-icon option-drag">
+            <i class="el-icon-s-operation" />
+          </div>
+          <el-input v-model="item.fullName" placeholder="选项名" size="small" />
+          <el-input v-model="item.id" placeholder="选项值" size="small" />
+          <div class="close-btn select-line-icon"
+            @click="activeData.__slot__.options.splice(index, 1)">
+            <i class="el-icon-remove-outline" />
+          </div>
+        </div>
+      </draggable>
+      <div style="margin-left: 29px;">
+        <el-button style="padding-bottom: 0" icon="el-icon-circle-plus-outline" type="text"
+          @click="addSelectItem">
+          添加选项
+        </el-button>
+      </div>
+    </template>
+    <CCIT-TreeSelect :options="treeData" v-model="activeData.__config__.dictionaryType"
+      placeholder="选择数据字典" lastLevel v-if="activeData.__config__.dataType==='dictionary'" clearable>
+    </CCIT-TreeSelect>
+    <template v-if="activeData.__config__.dataType === 'dynamic'">
+      <el-form-item label="数据接口">
+        <CCIT-TreeSelect :options="dataInterfaceSelector" v-model="activeData.__config__.propsUrl"
+          placeholder="请选择数据接口" lastLevel lastLevelKey='categoryId' lastLevelValue='1'
+          @getValue="propsUrlChange" clearable>
+        </CCIT-TreeSelect>
+      </el-form-item>
+      <el-form-item label="值">
+        <el-input v-model="activeData.__config__.props.value" placeholder="请输入值" />
+      </el-form-item>
+      <el-form-item label="标签">
+        <el-input v-model="activeData.__config__.props.label" placeholder="请输入标签" />
+      </el-form-item>
+    </template>
+    <el-divider />
+    <!-- <el-form-item label="显示标签">
+      <el-switch v-model="activeData.__config__.showLabel" />
+    </el-form-item> -->
+    <el-form-item label="选项样式">
+      <el-radio-group v-model="activeData.__config__.optionType">
+        <el-radio-button label="default">
+          默认
+        </el-radio-button>
+        <el-radio-button label="button">
+          按钮
+        </el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item v-if=" activeData.__config__.optionType === 'default'" label="是否带边框">
+      <el-switch v-model="activeData.__config__.border" />
+    </el-form-item>
+    <el-form-item v-if="activeData.__config__.optionType === 'button' ||
+                activeData.__config__.border" label="组件尺寸">
+      <el-radio-group v-model="activeData.size">
+        <el-radio-button label="medium">
+          中等
+        </el-radio-button>
+        <el-radio-button label="small">
+          较小
+        </el-radio-button>
+        <el-radio-button label="mini">
+          迷你
+        </el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item label="是否禁用">
+      <el-switch v-model="activeData.disabled" />
+    </el-form-item>
+    <el-form-item label="是否必填">
+      <el-switch v-model="activeData.__config__.required" />
+    </el-form-item>
+
+    <template v-if="this.$route.name.indexOf('generator') == -1">
+      <el-divider>事件</el-divider>
+      <span style="line-height: 30px;">注意：设计子表中无效</span>
+      <div v-for="(item, index) in activeData.__events__" :key="index" class="reg-item">
+          <span class="close-btn" @click="activeData.__events__.splice(index, 1)">
+            <i class="el-icon-close"/>
+          </span>
+        <el-form-item label="事件名称">
+          <el-input v-model="item.funName" :disabled="true"/>
+        </el-form-item>
+        <el-form-item label="内容" style="margin-bottom:0">
+          <el-button type="text" @click="openCodeDialog(item.funContext,item.funName,index)">编辑</el-button>
+        </el-form-item>
+      </div>
+      <div class="mt-10">
+        <el-dropdown>
+          <el-button type="primary">添加常用事件<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="addEvent(item)" v-for="(item,i) in eventList" :key="i">
+              {{item.name}}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+
+      <el-dialog :title="funName" :visible.sync="dialogVisible" class="CCIT-dialog CCIT-dialog_center" lock-scroll
+                 width="66%"
+                 :before-close="handleClose" append-to-body>
+        <div class="codeArea">
+          <CCITCodeEditor v-model="codeData" :options="options" ref="codeEditor"/>
+        </div>
+        <span slot="footer" class="dialog-footer">
+                 <el-button @click="dialogVisible = false">{{$t('common.cancelButton')}}</el-button>
+                 <el-button type="primary" @click="setEventCode()"
+                            :loading="btnLoading">{{$t('common.confirmButton')}}</el-button>
+            </span>
+      </el-dialog>
+    </template>
+  </el-row>
+</template>
+<script>
+import comMinix from './minix';
+import draggable from 'vuedraggable'
+import { getDictionaryTypeSelector, getDictionaryDataSelector } from '@/api/systemData/dictionary'
+import { getDataInterfaceSelector, previewDataInterface } from '@/api/systemData/dataInterface'
+import CCITCodeEditor from '@/components/CCITEditor/monaco'
+export default {
+  props: ['activeData'],
+  mixins: [comMinix],
+  components: { draggable,CCITCodeEditor },
+  data() {
+    return {
+      treeData: [],
+      dataInterfaceSelector: [],
+      codeData: "",
+      btnLoading: false,
+      dialogVisible: false,
+      funNameFlag: "",
+      funName: "",
+      options: {
+        language: 'javascript',
+        fontSize: 14,
+        theme: "vs-dark"
+      },
+      eventList: [
+        {name: "点击事件(click)", funName: "click", funContext: ""}
+      ]
+    }
+  },
+  created() {
+    this.getDictionaryType()
+    this.getDataInterfaceSelector()
+  },
+  watch: {
+    'activeData.__config__.dictionaryType': function (val) {
+      if (!val) {
+        this.activeData.__slot__.options = []
+        return
+      }
+      getDictionaryDataSelector(val).then(res => {
+        this.activeData.__slot__.options = res.data.list
+      })
+    }
+  },
+  methods: {
+    getDictionaryType() {
+      getDictionaryTypeSelector().then(res => {
+        this.treeData = res.data.list
+      })
+    },
+    getDataInterfaceSelector() {
+      getDataInterfaceSelector().then(res => {
+        this.dataInterfaceSelector = res.data
+      })
+    },
+    addSelectItem() {
+      this.activeData.__slot__.options.push({
+        fullName: '',
+        id: ''
+      })
+    },
+    dataTypeChange(val) {
+      this.activeData.__config__.defaultValue = []
+      this.activeData.__slot__.options = []
+      this.activeData.__config__.props.value = 'id'
+      this.activeData.__config__.props.label = 'fullName'
+      if (val === 'static') {
+        this.activeData.__config__.dictionaryType = ''
+        this.activeData.__config__.propsUrl = ''
+      }
+      if (val === 'dynamic') {
+        this.activeData.__config__.dictionaryType = ''
+      }
+      if (val === 'dictionary') {
+        this.activeData.__config__.propsUrl = ''
+      }
+    },
+    dictionaryTypeChange() {
+      this.activeData.__config__.defaultValue = []
+    },
+    propsUrlChange(val) {
+      if (!val) {
+        this.activeData.__slot__.options = []
+        return
+      }
+      this.activeData.__config__.defaultValue = []
+      previewDataInterface(val).then(res => {
+        this.activeData.__slot__.options = res.data
+      }).catch(res => {
+        this.activeData.__config__.propsUrl = ''
+        this.activeData.__slot__.options = []
+      })
+    },
+    addEvent(row) {
+      this.activeData.__events__.push({
+        funName: row.funName,
+        funContext: row.funContext
+      })
+    },
+    openCodeDialog(data, flag, index) {
+      this.dialogVisible = true;
+      this.funNameFlag = flag;
+      this.arrIndex = index;
+      this.funName = flag + "事件";
+      this.$nextTick(function () {
+        this.$refs.codeEditor.changeEditor({
+          value: data,
+          options: this.options
+        })
+      })
+    },
+    handleClose(done) {
+      this.setEventData();
+      this.$confirm('确认关闭？').then(_ => {
+        done();
+      }).catch(_ => {
+      });
+    },
+    setEventData() {
+      this.$set(this.activeData.__events__, this.arrIndex, {
+        funName: this.funNameFlag,
+        funContext: this.codeData
+      });
+    },
+    setEventCode() {
+      this.setEventData();
+      this.dialogVisible = false;
+    }
+  }
+}
+</script>
+<style lang="scss">
+.select-item {
+  display: flex;
+  border: 1px dashed #fff;
+  box-sizing: border-box;
+  & .close-btn {
+    cursor: pointer;
+    color: #f56c6c;
+  }
+  & .el-input + .el-input {
+    margin-left: 4px;
+  }
+}
+.select-item + .select-item {
+  margin-top: 4px;
+}
+.select-item.sortable-chosen {
+  border: 1px dashed #409eff;
+}
+.select-line-icon {
+  line-height: 32px;
+  font-size: 22px;
+  padding: 0 4px;
+  color: #777;
+}
+.option-drag {
+  cursor: move;
+}
+</style>

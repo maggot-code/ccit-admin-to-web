@@ -1,0 +1,177 @@
+@import "../assets/scss/theme.scss";
+.dark {
+    background-color: $menuBg;
+    .app-main {
+        background-color: $darkBg;
+        .dashboard-container {
+            background-color: $darkBgSec;
+        }
+    }
+    .navbar {
+        background-color: $darkBg;
+        border-bottom: 1px solid $darkBorder;
+    }
+    .tags-view-container {
+        background-color: $darkBg;
+        border-bottom: 1px solid $darkBorder;
+        .el-tabs__btn {
+            color: #fff;
+            &:first-of-type {
+                border-right: 1px solid $darkBorder;
+                background-color: $darkBg;
+            }
+            &:last-of-type {
+                border-left: 1px solid $darkBorder;
+                background-color: $darkBg;
+            }
+        }
+        .tags-view-wrapper {
+            .tags-view-item {
+                background-color: $darkBg;
+                color: #fff;
+                border-right: 1px solid $darkBorder;
+            }
+            .tags-view-item.active {
+                background-color: #ebeef5;
+                color: #666;
+            }
+        }
+    }
+    .layout-area {
+        .el-card {
+            border: 1px solid #404874;
+            box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
+            .el-card__header {
+                color: $darkTitle;
+                border-bottom: 1px solid $darkBorder;
+                padding: 0;
+                border-bottom: none;
+            }
+            .el-card__body {
+                color: #8c94c2 !important;
+                width: 100%;
+                height: 100%;
+                .num {
+                    color: #f39938 !important;
+                }
+                .el-tabs__item {
+                    color: #ffffff;
+                }
+                .el-table {
+                    border-top: 1px solid $darkBorder;
+                    background-color: transparent;
+                    th,
+                    tr {
+                        background-color: transparent;
+                    }
+                    td,
+                    th.is-leaf {
+                        border-bottom: 1px solid $darkBorder;
+                    }
+
+                    tr:hover > td {
+                        background-color: #5f6da8;
+                    }
+                    .el-button--text {
+                        color: #fff !important;
+                    }
+                }
+                .daily-content {
+                    .el-calendar {
+                        background-color: transparent;
+                        .el-calendar__header {
+                            border-bottom: 1px solid $darkBorder;
+                            .el-calendar__title {
+                                color: $darkTitle;
+                            }
+                        }
+                        .el-calendar__body .el-calendar-table thead th {
+                            color: $darkTitle;
+                        }
+                    }
+                    .el-timeline-item__content {
+                        color: #fff;
+                    }
+                    .el-timeline-item__icon {
+                        font-size: 18px;
+                    }
+                }
+
+                .mail-content {
+                    .row:not(:last-child) {
+                        border-bottom: 1px solid $darkBorder !important;
+                    }
+                    .mail-title {
+                        color: #fff;
+                    }
+                }
+                .login-content .item-name {
+                    color: #fff !important;
+                }
+                .links-content .item a {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}
+
+.lightWhite {
+    background-color: #fff !important;
+    .right-menu .right-menu-item {
+        color: #333 !important;
+    }
+    .navbar .weather {
+        color: #333 !important;
+    }
+    .layout-area {
+        .el-card {
+            width: 100%;
+            height: 100%;
+            .el-card__header {
+                color: $lightTitle;
+                font-size: 16px;
+                padding: 0;
+                border-bottom: none;
+            }
+            .el-table {
+                background-color: transparent;
+                tr {
+                    background-color: transparent;
+                }
+            }
+            
+        }
+    }
+}
+
+@mixin card-header($colorRgba, $color) {
+    background-color: $colorRgba !important;
+    color: $color !important;
+}
+.vue-grid-item .blue .el-card__header {
+    @include card-header($blueRgba, $blue);
+}
+
+.vue-grid-item .purple .el-card__header {
+    @include card-header($purpleRgba, $purple);
+}
+
+.vue-grid-item .azure .el-card__header {
+    @include card-header($azureRgba, $azure);
+}
+.vue-grid-item .ocean .el-card__header {
+    @include card-header($oceanRgba, $ocean);
+}
+.vue-grid-item .green .el-card__header {
+    @include card-header($greenRgba, $green);
+}
+.vue-grid-item .yellow .el-card__header {
+    @include card-header($yellowRgba, $yellow);
+}
+.vue-grid-item .orange .el-card__header {
+    @include card-header($orangeRgba, $orange);
+}
+.vue-grid-item .red .el-card__header {
+    @include card-header($redRgba, $red);
+}

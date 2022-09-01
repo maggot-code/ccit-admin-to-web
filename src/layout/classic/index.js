@@ -1,0 +1,6 @@
+export { default as AppMain } from '../components/AppMain'
+export { default as Navbar } from './Navbar'
+export { default as Sidebar } from './sidebar'
+export { default as TagsView } from '../components/tagsView'
+export { default as CustService } from '../components/custService'
+export { default as Note } from '../components/note'
