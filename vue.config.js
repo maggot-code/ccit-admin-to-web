@@ -77,7 +77,11 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        'static': resolve('static') // 增加这一行代码
+        'static': resolve('static'), // 增加这一行代码
+        // 插入自定义业务相关的快捷路径标识
+        "@bff":resolve('src/bff'),
+        "@bizv": resolve('src/views/biz'),
+        "@bizc": resolve('src/components/Biz'),
       }
     },
     plugins: [
