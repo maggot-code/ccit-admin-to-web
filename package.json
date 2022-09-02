@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development VUE_APP_BASE_API=/dev vue-cli-service serve --open",
-"build": "cross-env NODE_ENV=production VUE_APP_BASE_API= vue-cli-service build",
+    "build": "cross-env NODE_ENV=production VUE_APP_BASE_API= vue-cli-service build",
     "build:staging": "cross-env NODE_ENV=production vue-cli-service build --mode staging",
     "build:javaBootTest": "cross-env NODE_ENV=production vue-cli-service build --mode javaBootTest",
     "build:javaCloudDev": "cross-env NODE_ENV=production vue-cli-service build --mode javaCloudDev",
