@@ -1,4 +1,13 @@
+/*
+ * @FilePath: \ccit-admin-to-web\src\main.js
+ * @Author: maggot-code
+ * @Date: 2022-02-23 10:01:07
+ * @LastEditors: maggot-code
+ * @LastEditTime: 2022-09-05 09:29:31
+ * @Description: 
+ */
 import Vue from 'vue'
+import VueCompositionAPI from "@vue/composition-api";
 import service from './utils/request'
 const ccit = require('./utils/ccit').default
 
@@ -30,6 +39,7 @@ import permission from "@/directive/permission";
 Vue.prototype.$http = service;
 Vue.prototype.$axios = service;
 
+Vue.use(VueCompositionAPI);
 Vue.use(permission)
 
 Vue.use(Element, {
