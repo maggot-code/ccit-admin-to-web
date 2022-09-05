@@ -3,7 +3,10 @@
     "baseUrl": "./",
     "jsx":"preserve",
     "paths": {
-        "@/*": ["src/*"]
+        "@/*": ["src/*"],
+        "@bff/*":["src/bff/*"],
+        "@bizv/*":["src/views/biz/*"],
+        "@bizc/*":["src/components/Biz/*"],
     }
   },
   "exclude": ["node_modules", "dist"]
