@@ -1,4 +1,13 @@
 // cover some element-ui styles
+.mg-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .el-pagination {
+    align-self: center;
+  }
+}
 
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {

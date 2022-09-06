@@ -1,0 +1,53 @@
+{
+    "uiSchema": {
+        "stripe": true,
+        "isPage": true,
+        "isChoice": true,
+        "isIndex": true,
+        "size": "small",
+        "handleFixed": "right"
+    },
+    "controller": {
+        "add": {
+            "mode": "add",
+            "type": "success",
+            "icon": "el-icon-edit",
+            "label": "新增"
+        },
+        "edit": {
+            "mode": "edit",
+            "type": "warning",
+            "icon": "el-icon-edit",
+            "label": "修改"
+        },
+        "delete": {
+            "mode": "delete",
+            "type": "danger",
+            "icon": "el-icon-delete-solid",
+            "label": "删除"
+        }
+    },
+    "columnSchema": [
+        {
+            "mold": "default",
+            "label": "姓名",
+            "headerAlign": "left",
+            "isSort": true,
+            "prop": "name"
+        },
+        {
+            "mold": "default",
+            "label": "地址",
+            "headerAlign": "left",
+            "isSort": true,
+            "prop": "address"
+        },
+        {
+            "mold": "default",
+            "label": "日期",
+            "align": "center",
+            "isSort": true,
+            "prop": "date"
+        }
+    ]
+}

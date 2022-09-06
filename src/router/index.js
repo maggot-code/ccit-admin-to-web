@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /* Router Modules */
 
@@ -35,115 +35,124 @@ import Layout from '@/layout'
  */
 
 // component: (resolve) => require(["@/views/login/index"], resolve),
-export const constantRoutes = [{
-  path: '/redirect',
-  component: Layout,
-  hidden: true,
-  children: [{
-    path: '/redirect/:path*',
-    component: (resolve) => require(['@/views/redirect'], resolve)
-  }]
-},
-{
-  path: '/login',
-  component: (resolve) => require(['@/views/login'], resolve),
-  hidden: true
-},
-{
-  path: '/jump',
-  component: (resolve) => require(['@/views/login/jump'], resolve),
-  hidden: true
-},
-{
-  path: '/lockScreen',
-  component: (resolve) => require(['@/views/basic/lockScreen'], resolve),
-  hidden: true
-},
-{
-  path: '/auth-redirect',
-  component: (resolve) => require(['@/views/login/auth-redirect'], resolve),
-  hidden: true
-},
-{
-  path: '/test-ToDoList',
-  component: (resolve) => require(['@/views/login/test-ToDoList'], resolve),
-  hidden: true
-},
-{
-  path: '/introduce',
-  redirect: '/introduce/main',
-  component: (resolve) => require(['@/views/introduce'], resolve),
-  hidden: true,
-  meta: {
-    title: 'introduce',
-    zhTitle: '产品货架'
+export const constantRoutes = [
+  {
+    path: "/redirect",
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: "/redirect/:path*",
+        component: (resolve) => require(["@/views/redirect"], resolve),
+      },
+    ],
   },
-  children: [
-    {
-      path: "/introduce/main",
-      name: "main",
-      hidden: true,
-      meta: {
-        title: 'introduce',
-        zhTitle: '产品货架'
-      },
-      component: (resolve) => require(['@/views/introduce/main.vue'], resolve),
+  {
+    path: "/login",
+    component: (resolve) => require(["@/views/login"], resolve),
+    hidden: true,
+  },
+  {
+    path: "/jump",
+    component: (resolve) => require(["@/views/login/jump"], resolve),
+    hidden: true,
+  },
+  {
+    path: "/lockScreen",
+    component: (resolve) => require(["@/views/basic/lockScreen"], resolve),
+    hidden: true,
+  },
+  {
+    path: "/auth-redirect",
+    component: (resolve) => require(["@/views/login/auth-redirect"], resolve),
+    hidden: true,
+  },
+  {
+    path: "/test-ToDoList",
+    component: (resolve) => require(["@/views/login/test-ToDoList"], resolve),
+    hidden: true,
+  },
+  {
+    path: "/introduce",
+    redirect: "/introduce/main",
+    component: (resolve) => require(["@/views/introduce"], resolve),
+    hidden: true,
+    meta: {
+      title: "introduce",
+      zhTitle: "产品货架",
     },
-    {
-      path: "/introduce/product",
-      name: "product",
-      hidden: true,
-      component: (resolve) => require(['@/views/introduce/product.vue'], resolve),
-      meta: {
-        title: 'introduce',
-        zhTitle: '产品货架'
+    children: [
+      {
+        path: "/introduce/main",
+        name: "main",
+        hidden: true,
+        meta: {
+          title: "introduce",
+          zhTitle: "产品货架",
+        },
+        component: (resolve) =>
+          require(["@/views/introduce/main.vue"], resolve),
       },
-    },
-    {
-      path: "/introduce/system",
-      name: "system",
-      hidden: true,
-      component: (resolve) => require(['@/views/introduce/system.vue'], resolve),
-      meta: {
-        title: 'introduce',
-        zhTitle: '产品货架'
+      {
+        path: "/introduce/product",
+        name: "product",
+        hidden: true,
+        component: (resolve) =>
+          require(["@/views/introduce/product.vue"], resolve),
+        meta: {
+          title: "introduce",
+          zhTitle: "产品货架",
+        },
       },
-    },
-    {
-      path: "/introduce/aboutUs",
-      name: "aboutUs",
-      hidden: true,
-      component: (resolve) => require(['@/views/introduce/main.vue'], resolve),
-      meta: {
-        title: 'introduce',
-        zhTitle: '产品货架'
+      {
+        path: "/introduce/system",
+        name: "system",
+        hidden: true,
+        component: (resolve) =>
+          require(["@/views/introduce/system.vue"], resolve),
+        meta: {
+          title: "introduce",
+          zhTitle: "产品货架",
+        },
       },
-    },
-  ]
-},
-]
+      {
+        path: "/introduce/aboutUs",
+        name: "aboutUs",
+        hidden: true,
+        component: (resolve) =>
+          require(["@/views/introduce/main.vue"], resolve),
+        meta: {
+          title: "introduce",
+          zhTitle: "产品货架",
+        },
+      },
+    ],
+  },
+];
 
-const createRouter = () => new Router({
-  mode: 'history', // require service support
-  scrollBehavior: () => ({
-    y: 0
-  }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    mode: "hash",
+    scrollBehavior: () => ({
+      y: 0,
+    }),
+    routes: constantRoutes,
+  });
 
-const originalPush = Router.prototype.push
+const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => {
-    if (err && err.name != 'NavigationDuplicated') this.replace('/404')
-  })
-}
+  return originalPush.call(this, location).catch((err) => {
+    if (err && err.name != "NavigationDuplicated") this.replace("/404");
+  });
+};
 
-const router = createRouter()
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;
