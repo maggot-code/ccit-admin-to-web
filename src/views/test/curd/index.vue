@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-06 15:17:41
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-07 15:22:49
+ * @LastEditTime: 2022-09-07 18:07:35
  * @Description: 
 -->
 <template>
@@ -27,7 +27,6 @@
     <div class="test-curd-table" v-loading="loading">
       <mg-table
         ref="tableRefs"
-        :resetCurrentPage="resetCurrentPage"
         :tableSchema="{ uiSchema, columnSchema }"
         :tableData="tableData"
         :tableChoice="tableChoice"
@@ -39,6 +38,7 @@
         @rowEnter="rowEnter"
         @rowLeave="rowLeave"
         @tableHandle="tableHandle"
+        @tableParams="tableParams"
         @cellEvent="cellEvent"
         @handleRow="handleRow"
       >
@@ -96,26 +96,26 @@ export default {
   name: "TestCurd",
   props: {},
   setup() {
-    const resetCurrentPage = ref(Date.now());
     const tableConfig = shallowRef({
       keyName: "id",
       controller: [],
       columnSchema: [],
+      uiSchema: {
+        stripe: true,
+        isPage: true,
+        isChoice: true,
+        isIndex: true,
+        // sortProp: "id",
+        // sortOrder: "ascending",
+        size: "small",
+        handleFixed: "right",
+      },
     });
     const tableRefs = ref();
     const tableTotal = ref(0);
     const tableData = shallowRef([]);
     const tableChoice = shallowRef([]);
-    const uiSchema = shallowRef({
-      stripe: true,
-      isPage: true,
-      isChoice: true,
-      isIndex: true,
-      sortProp: "id",
-      sortOrder: "ascending",
-      size: "small",
-      handleFixed: "right",
-    });
+    const uiSchema = computed(() => unref(tableConfig).uiSchema);
     const columnSchema = computed(() => unref(tableConfig).columnSchema);
     const controller = computed(() => {
       return toObject(
@@ -145,6 +145,9 @@ export default {
     function tableHandle(target) {
       console.log(target);
     }
+    function tableParams(params) {
+      console.log(params);
+    }
     function cellEvent(event) {
       console.log(event);
     }
@@ -158,8 +161,6 @@ export default {
     onMounted(async () => {
       const config = await getConfig();
       tableConfig.value = config;
-      uiSchema.value = config.uiSchema;
-      resetCurrentPage.value = Date.now();
 
       const { total, data } = await getData();
       tableTotal.value = total;
@@ -170,7 +171,6 @@ export default {
     });
 
     return {
-      resetCurrentPage,
       tableConfig,
       tableRefs,
       tableTotal,
@@ -186,6 +186,7 @@ export default {
       rowEnter,
       rowLeave,
       tableHandle,
+      tableParams,
       cellEvent,
       handleRow,
       handlerAllControl,
