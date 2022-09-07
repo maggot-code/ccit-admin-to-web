@@ -1,4 +1,4 @@
-# ccit-web
+# ccit-web-admin
 
 ## 环境要求
 
