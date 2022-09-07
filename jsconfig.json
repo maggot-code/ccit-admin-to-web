@@ -21,7 +21,7 @@
     "node_modules",
     "dist"
   ],
-  // "vueCompilerOptions": {
-  //   "target": 2
-  // }
+  "vueCompilerOptions": {
+    "target": 2
+  }
 }

@@ -1,5 +1,8 @@
 {
+    "keyName": "projid",
     "uiSchema": {
+        "sortProp": "projid",
+        "sortOrder": "ascending",
         "stripe": true,
         "isPage": true,
         "isChoice": true,
@@ -7,29 +10,52 @@
         "size": "small",
         "handleFixed": "right"
     },
-    "controller": {
-        "add": {
-            "mode": "add",
+    "controller": [
+        {
+            "mode": "export",
+            "type": "primary",
+            "icon": "el-icon-eleme",
+            "useRow": true,
+            "useAll": true,
+            "label": "导出"
+        },
+        {
+            "mode": "import",
             "type": "success",
-            "icon": "el-icon-edit",
+            "icon": "el-icon-eleme",
+            "useRow": false,
+            "useAll": true,
+            "label": "导入"
+        },
+        {
+            "mode": "add",
+            "type": "primary",
+            "icon": "el-icon-eleme",
+            "useRow": false,
+            "useAll": true,
             "label": "新增"
         },
-        "edit": {
+        {
             "mode": "edit",
             "type": "warning",
-            "icon": "el-icon-edit",
+            "icon": "el-icon-eleme",
+            "useRow": true,
+            "useAll": false,
             "label": "修改"
         },
-        "delete": {
+        {
             "mode": "delete",
             "type": "danger",
-            "icon": "el-icon-delete-solid",
+            "icon": "el-icon-eleme",
+            "useRow": true,
+            "useAll": true,
             "label": "删除"
         }
-    },
+    ],
     "columnSchema": [
         {
-            "mold": "default",
+            "mold": "link",
+            "formatLink": "dialog?id=id&str=name",
             "label": "姓名",
             "headerAlign": "left",
             "isSort": true,
@@ -44,9 +70,11 @@
         },
         {
             "mold": "default",
+            "formatDate": "yyyy-MM-dd hh:mm:ss",
             "label": "日期",
             "align": "center",
             "isSort": true,
+            "width": 160,
             "prop": "date"
         }
     ]
