@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-06 15:17:41
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-07 18:07:35
+ * @LastEditTime: 2022-09-08 09:54:07
  * @Description: 
 -->
 <template>
@@ -49,6 +49,7 @@
 <script>
 import {
   onMounted,
+  watch,
   unref,
   ref,
   shallowRef,
@@ -105,8 +106,8 @@ export default {
         isPage: true,
         isChoice: true,
         isIndex: true,
-        // sortProp: "id",
-        // sortOrder: "ascending",
+        sortProp: "id",
+        sortOrder: "ascending",
         size: "small",
         handleFixed: "right",
       },
@@ -115,6 +116,12 @@ export default {
     const tableTotal = ref(0);
     const tableData = shallowRef([]);
     const tableChoice = shallowRef([]);
+    const tableRequest = shallowRef({
+      current: 1,
+      order: "asc",
+      prop: "id",
+      size: 20,
+    });
     const uiSchema = computed(() => unref(tableConfig).uiSchema);
     const columnSchema = computed(() => unref(tableConfig).columnSchema);
     const controller = computed(() => {
@@ -132,7 +139,17 @@ export default {
       });
     });
     const loading = ref(true);
+    const tableSignal = ref(0);
+    const formSignal = ref(0);
+    const signal = computed(() => {
+      return {
+        table: unref(tableSignal),
+        form: unref(formSignal),
+        isReady: unref(tableSignal) >= 1 && unref(formSignal) >= 1,
+      };
+    });
 
+    // function
     function onChoice(choice) {
       console.log(choice);
     }
@@ -143,10 +160,13 @@ export default {
       // console.log(target);
     }
     function tableHandle(target) {
-      console.log(target);
+      tableRequest.value = target;
+      tableSignal.value++;
     }
     function tableParams(params) {
-      console.log(params);
+      tableRequest.value = params;
+      tableSignal.value++;
+      formSignal.value++;
     }
     function cellEvent(event) {
       console.log(event);
@@ -158,9 +178,11 @@ export default {
       console.log(target);
     }
 
-    onMounted(async () => {
-      const config = await getConfig();
-      tableConfig.value = config;
+    // business
+    async function getTableData() {
+      console.log(unref(tableRequest));
+
+      loading.value = true;
 
       const { total, data } = await getData();
       tableTotal.value = total;
@@ -168,6 +190,15 @@ export default {
       tableChoice.value = data.filter((item) => item.choice);
 
       loading.value = false;
+    }
+
+    // flow path
+    watch(signal, (newVal) => {
+      newVal.isReady && getTableData();
+    });
+    onMounted(async () => {
+      const config = await getConfig();
+      tableConfig.value = config;
     });
 
     return {
