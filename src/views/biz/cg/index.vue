@@ -1,9 +1,9 @@
 <!--
- * @FilePath: \ccit-admin-to-web\src\views\biz\index.vue
+ * @FilePath: \ccit-admin-to-web\src\views\biz\cg\index.vue
  * @Author: maggot-code
- * @Date: 2022-09-08 14:16:54
+ * @Date: 2022-09-08 17:59:31
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-08 18:08:35
+ * @LastEditTime: 2022-09-08 18:00:07
  * @Description: 
 -->
 <template>
@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: "Biz",
+  name: "CG",
   props: {},
   setup() {
-    console.log("biz");
+    console.log("cg");
     return {};
   },
 };
