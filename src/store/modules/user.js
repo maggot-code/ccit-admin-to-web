@@ -11,9 +11,11 @@ import {
   getUserAccount,
 } from "@/utils/auth";
 import { resetRouter } from "@/router";
+import { useBizRouter } from "./user.router";
 import md5 from "js-md5";
 
 const define = require("@/utils/define");
+const { bizRouter, isBizRouter, setupBizRouter } = useBizRouter();
 
 const state = {
   token: getToken(),
@@ -259,35 +261,20 @@ const actions = {
                   e.path = e.urlAddress + "?" + params.join("&");
                 }
               }
-              // 业务模板 CURD
-              if (e.type == 101) {
-                e.path = `/${e.urlAddress}`;
-                let newObj = {
-                  path: `/${e.urlAddress}`,
-                  component: (resolve) =>
-                    require([`@/views/${e.urlAddress}`], resolve),
-                  name: name,
-                  meta: {
-                    title: name,
-                    icon: e.icon,
-                    zhTitle: e.fullName,
-                    modelId: e.id,
-                  },
-                };
-                routerList.push(newObj);
-              }
-              // 业务模板 扩展模板
-              if (e.type == 111) {
-                // const actualAddress = e.urlAddress.
+
+              // 扩展业务
+              if (isBizRouter(e)) {
+                e = setupBizRouter(e);
               }
             }
           }
+
           setData(menuList);
-          commit("SET_MENULIST", []);
           commit("SET_MENULIST", menuList);
           commit("SET_USERINFO", userInfo);
           commit("SET_PERMISSION_LIST", permissionList);
           commit("SET_HASGETMENU", true);
+          routerList.push(bizRouter);
           resolve(routerList);
         })
         .catch((error) => {

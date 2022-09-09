@@ -109,7 +109,7 @@ import {
 import { getSelectionList } from "../api/system-menu.api";
 
 // 设置需要填写地址的白名单类型
-const useAddressType = ["2", "101", "111"];
+const useAddressType = ["2"];
 
 export default {
   name: "systemMenuDialog",
