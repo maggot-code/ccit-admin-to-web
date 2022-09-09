@@ -3,31 +3,33 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-09 13:08:31
+ * @LastEditTime: 2022-09-09 18:07:54
  * @Description: 
 -->
 <template>
-  <div class="biz-curd">
-    biz-curd
-  </div>
+  <div class="biz-curd">{{ label }}</div>
 </template>
 
 <script>
-import { inject } from "@vue/composition-api";
+import { onMounted, inject, ref } from "@vue/composition-api";
 
 export default {
   name: "BizCurd",
   props: {},
   setup(props, { root }) {
-    console.log(root.$route);
+    const label = ref("");
 
-    const getData = inject("getData", () => {
-      console.log("biz get data");
+    const setupLabel = inject("setupLabel", () => {
+      return "Biz Curd 通用业务增删改查业务模板";
     });
 
-    getData();
+    onMounted(() => {
+      label.value = setupLabel();
+    });
 
-    return {};
+    return {
+      label,
+    };
   },
 };
 </script>

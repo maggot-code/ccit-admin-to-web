@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-09 13:54:31
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-09 13:54:51
+ * @LastEditTime: 2022-09-09 18:04:21
  * @Description: 
 -->
 <template>
@@ -17,11 +17,10 @@ export default {
   name: "BizKind",
   props: {},
   setup(props, { root }) {
-    console.log("kind", root.$route);
-
-    provide("getData", () => {
-      console.log("kind biz get data");
+    provide("setupLabel", () => {
+      return "Biz Kind Curd 工种业务增删改查业务模板";
     });
+
     return {};
   },
 };

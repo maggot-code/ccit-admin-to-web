@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-08 18:08:35
+ * @LastEditTime: 2022-09-09 18:11:42
  * @Description: 
 -->
 <template>
@@ -11,11 +11,20 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted } from "@vue/composition-api";
+
 export default {
   name: "Biz",
   props: {},
   setup() {
-    console.log("biz");
+    onMounted(() => {
+      console.log("biz install");
+    });
+
+    onUnmounted(() => {
+      console.log("biz uninstall");
+    });
+
     return {};
   },
 };

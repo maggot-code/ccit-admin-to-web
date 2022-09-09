@@ -3,10 +3,10 @@
  * @Author: maggot-code
  * @Date: 2022-09-09 14:02:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-09 17:51:51
+ * @LastEditTime: 2022-09-09 18:01:04
  * @Description:
  */
-import TemplateAccess from "./template";
+import { TemplateAccess, TemplateKeys } from "./template";
 
 // 定义业务模板的共享路由
 // 会在该路由组件下集成业务模板所需的一些能力，并注入到下层组件中
@@ -45,7 +45,7 @@ function useTemplate({ template, router }) {
 export function isBizRouter(router) {
   const { type } = router;
 
-  return Reflect.ownKeys(TemplateAccess).includes(`${type ?? "unknow"}`);
+  return TemplateKeys.includes(`${type ?? "unknow"}`);
 }
 
 export function useBizRouter() {
