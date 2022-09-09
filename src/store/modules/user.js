@@ -11,11 +11,11 @@ import {
   getUserAccount,
 } from "@/utils/auth";
 import { resetRouter } from "@/router";
-import { useBizRouter } from "./user.router";
+import { isBizRouter, useBizRouter } from "../user.router";
 import md5 from "js-md5";
 
 const define = require("@/utils/define");
-const { bizRouter, isBizRouter, setupBizRouter } = useBizRouter();
+const { bizRouter, setupBizRouter } = useBizRouter();
 
 const state = {
   token: getToken(),
@@ -262,10 +262,10 @@ const actions = {
                 }
               }
 
-              // 扩展业务
-              if (isBizRouter(e)) {
-                e = setupBizRouter(e);
-              }
+              // 扩展类型
+              // [不能直接将一个对象赋值给 e]
+              // e = setupBizRouter(e) [x]
+              isBizRouter(e) && Object.assign(e, setupBizRouter(e));
             }
           }
 
@@ -278,6 +278,7 @@ const actions = {
           resolve(routerList);
         })
         .catch((error) => {
+          console.error(error);
           reject(error);
         });
     });

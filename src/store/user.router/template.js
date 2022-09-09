@@ -1,0 +1,65 @@
+/*
+ * @FilePath: \ccit-admin-to-web\src\store\user.router\template.js
+ * @Author: maggot-code
+ * @Date: 2022-09-09 14:04:00
+ * @LastEditors: maggot-code
+ * @LastEditTime: 2022-09-09 17:54:40
+ * @Description:提供给用户路由用作模板匹配使用，这里主要是实现了自定义的扩展，项目中原本携带的依然可以正常使用
+ *
+ * 整个文件中所有方法都是带有副作用的方法
+ * 使用的时候需要注意
+ */
+import { toMeta } from "./shared";
+
+// 100 用于扩展模板
+export function bindExtendTemplate(router) {
+  const { codeMap } = router;
+  const tmp = codeMap.at(-1);
+  const urlAddress = codeMap.slice(0, -1).join("/");
+  const path = `/${urlAddress}/${tmp}`;
+  const extend = Object.assign({}, router, {
+    tmp,
+    path,
+    urlAddress: `${urlAddress}/${tmp}`,
+  });
+  const vueRouter = {
+    component: (resolve) => require([`@/views/${urlAddress}`], resolve),
+    path: `/${urlAddress}`,
+    name: extend.enCode,
+    children: [
+      {
+        component: (resolve) => require([`@/views/biz/${tmp}`], resolve),
+        path,
+        name: `${extend.enCode}.model`,
+        meta: toMeta(extend),
+      },
+    ],
+  };
+
+  return {
+    hasAppend: true,
+    vueRouter,
+    extend,
+  };
+}
+
+// 101 增删改查模板
+export function bindCurdTemplate(router) {
+  const vueRouter = {
+    component: (resolve) => require([`@/views/biz/curd`], resolve),
+    path: router.path,
+    name: router.enCode,
+    meta: toMeta(router),
+  };
+
+  return {
+    hasAppend: true,
+    vueRouter,
+    extend: router,
+  };
+}
+
+export default {
+  "100": bindExtendTemplate,
+  "101": bindCurdTemplate,
+};
