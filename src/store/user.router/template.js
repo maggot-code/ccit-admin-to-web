@@ -3,11 +3,17 @@
  * @Author: maggot-code
  * @Date: 2022-09-09 14:04:00
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-09 17:54:40
+ * @LastEditTime: 2022-09-09 17:58:25
  * @Description:提供给用户路由用作模板匹配使用，这里主要是实现了自定义的扩展，项目中原本携带的依然可以正常使用
  *
  * 整个文件中所有方法都是带有副作用的方法
  * 使用的时候需要注意
+ *
+ * 绑定模板方法返回值需要严格按照下面的格式返回
+ * @return {Object} { extend, vueRouter, hasAppend }
+ * extend: 扩展属性，用来对写入的 router 对象进行扩展
+ * vueRouter: 生成的 vue-router 对象
+ * hasAppend: 校验是否需要追加到模板路由中
  */
 import { toMeta } from "./shared";
 
