@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 18:17:22
+ * @LastEditTime: 2022-09-13 18:19:05
  * @Description: 
 -->
 <template>
@@ -41,9 +41,8 @@
         </el-button-group>
       </div>
 
-      <div class="biz-curd-body-list" :class="listClassName">
+      <div class="biz-curd-body-list">
         <mg-table
-          v-if="listVisabled"
           ref="tableRefs"
           :tableSchema="{ uiSchema, columnSchema }"
           :tableData="TestData.data"
@@ -62,14 +61,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import {
-  onMounted,
-  onBeforeUnmount,
-  watch,
-  unref,
-  ref,
-  computed,
-} from "@vue/composition-api";
+import { onMounted, unref, computed } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
@@ -101,7 +93,6 @@ export default {
   },
   props: {},
   setup(props) {
-    const listVisabled = ref(false);
     const { config } = useTmpParams();
 
     const searchConfig = useSearchConfig();
@@ -110,32 +101,14 @@ export default {
     const loading = computed(() => {
       return !unref(listConfig.load) && !unref(searchConfig.load);
     });
-    const listClassName = computed(() => {
-      return unref(listConfig.data.hasAllController)
-        ? []
-        : ["biz-curd-body-list-notfunc"];
-    });
-
-    const unwatch = watch(loading, (load) => {
-      if (!load) {
-        listVisabled.value = true;
-        unwatch();
-      }
-    });
 
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
     });
 
-    onBeforeUnmount(() => {
-      unwatch();
-    });
-
     return {
       config,
       loading,
-      listClassName,
-      listVisabled,
       ...listConfig.data,
       ...searchConfig.data,
       TestData,
