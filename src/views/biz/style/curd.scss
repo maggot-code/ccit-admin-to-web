@@ -1,0 +1,21 @@
+.biz-curd {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    box-sizing: border-box;
+
+    &-function,
+    &-list {
+        width: 100%;
+    }
+
+    &-function {
+        height: 32px;
+    }
+
+    &-list {
+        height: calc(100% - 42px);
+    }
+}

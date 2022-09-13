@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 13:10:32
+ * @LastEditTime: 2022-09-13 13:54:31
  * @Description: 
 -->
 <template>
@@ -18,6 +18,7 @@ import {
   onUnmounted,
   unref,
 } from "@vue/composition-api";
+import { TmpParamsSymbolKey } from "@/biz/Template/shared/context";
 import { useRouterQuery } from "@/biz/Template/usecase/useRouterQuery";
 import { useState } from "@/biz/Template/usecase/useState";
 
@@ -29,13 +30,14 @@ export default {
     const { gather, hasGather } = useRouterQuery($route, $router);
     const { state, setupState } = useState({ state: false });
 
-    provide("bizParams", gather);
+    provide(TmpParamsSymbolKey, gather);
 
     watchEffect(() => {
       if (!unref(hasGather)) {
         // 警告
         console.warn("参数不足,或者格式错误");
       }
+
       setupState(hasGather);
     });
 
