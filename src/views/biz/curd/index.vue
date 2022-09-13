@@ -3,60 +3,105 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 16:30:22
+ * @LastEditTime: 2022-09-13 18:17:22
  * @Description: 
 -->
 <template>
-  <div class="biz biz-curd">
+  <div class="biz biz-curd" v-loading="loading">
     <div class="biz-curd-search">
-      {{ date }}
-    </div>
-
-    <div class="biz-curd-function">
-      <el-button-group>
-        <template v-for="control in allController">
-          <el-button
-            :key="control.mode"
-            :type="control.type"
-            :icon="control.icon"
-            size="mini"
-            @click="handlerAllControl(control)"
-          >
-            {{ control.label }}
-          </el-button>
+      <ToggleLayout>
+        <template #toggle-form>
+          <p>{{ date }}</p>
         </template>
-      </el-button-group>
+        <template #toggle-btn>
+          <el-button size="mini" icon="el-icon-search" type="primary"
+            >查询</el-button
+          >
+          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
+            >重置</el-button
+          >
+        </template>
+      </ToggleLayout>
     </div>
 
-    <div class="biz-curd-list" v-loading="loading">
-      <mg-table
-        ref="tableRefs"
-        :tableSchema="{ uiSchema, columnSchema }"
-        :tableData="[]"
-        :tableChoice="[]"
-        :total="0"
-        :controller="controller"
-        :defaultPageSize="20"
-        :loadPage="false"
-      >
-      </mg-table>
+    <div class="biz-curd-body">
+      <div class="biz-curd-body-function" v-if="hasAllController">
+        <el-button-group>
+          <template v-for="control in allController">
+            <el-button
+              :key="control.mode"
+              :type="control.type"
+              :icon="control.icon"
+              size="mini"
+              @click="handlerAllControl(control)"
+            >
+              {{ control.label }}
+            </el-button>
+          </template>
+        </el-button-group>
+      </div>
+
+      <div class="biz-curd-body-list" :class="listClassName">
+        <mg-table
+          v-if="listVisabled"
+          ref="tableRefs"
+          :tableSchema="{ uiSchema, columnSchema }"
+          :tableData="TestData.data"
+          :tableChoice="[]"
+          :total="TestData.total"
+          :controller="controller"
+          :defaultPageSize="20"
+          :loadPage="false"
+        >
+        </mg-table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted, unref, computed } from "@vue/composition-api";
+import ToggleLayout from "@/components/Toggle/toggle.vue";
+
+import {
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  unref,
+  ref,
+  computed,
+} from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
   useListConfig,
-  // useDataConfig,
 } from "@/biz/Template/usecase/usePackage";
+
+const TestData = {
+  total: 107,
+  data: [],
+};
+
+for (let index = 0; index < 20; index++) {
+  const choice = Math.random() > 0.5 ? true : false;
+
+  TestData.data.push({
+    id: index,
+    date: "2022/9/6 15:46:18",
+    address: "上海市普陀区金沙江路 1518 弄",
+    name: `张三-${index}`,
+    rowpower: choice ? "export" : "",
+    choice,
+  });
+}
 
 export default {
   name: "BizCurd",
+  components: {
+    ToggleLayout,
+  },
   props: {},
   setup(props) {
+    const listVisabled = ref(false);
     const { config } = useTmpParams();
 
     const searchConfig = useSearchConfig();
@@ -65,16 +110,35 @@ export default {
     const loading = computed(() => {
       return !unref(listConfig.load) && !unref(searchConfig.load);
     });
+    const listClassName = computed(() => {
+      return unref(listConfig.data.hasAllController)
+        ? []
+        : ["biz-curd-body-list-notfunc"];
+    });
+
+    const unwatch = watch(loading, (load) => {
+      if (!load) {
+        listVisabled.value = true;
+        unwatch();
+      }
+    });
 
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
     });
 
+    onBeforeUnmount(() => {
+      unwatch();
+    });
+
     return {
       config,
       loading,
+      listClassName,
+      listVisabled,
       ...listConfig.data,
       ...searchConfig.data,
+      TestData,
     };
   },
 };

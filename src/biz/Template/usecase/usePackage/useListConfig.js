@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:40:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 16:25:00
+ * @LastEditTime: 2022-09-13 17:41:38
  * @Description:
  */
 import { unref, computed } from "@vue/composition-api";
@@ -39,6 +39,7 @@ export function useListConfig() {
       return !!useAll;
     });
   });
+  const hasAllController = computed(() => unref(allController)?.length > 0);
 
   return {
     load,
@@ -48,6 +49,7 @@ export function useListConfig() {
       columnSchema,
       controller,
       allController,
+      hasAllController,
     },
   };
 }

@@ -6,16 +6,35 @@
     background-color: #fff;
     box-sizing: border-box;
 
-    &-function,
-    &-list {
+    &-search,
+    &-body,
+    &-body-function,
+    &-body-list {
+        align-self: center;
         width: 100%;
     }
 
-    &-function {
-        height: 32px;
+    &-search {
+        height: 48px;
     }
 
-    &-list {
-        height: calc(100% - 42px);
+    &-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: calc(100% - 58px);
+
+        &-function {
+            height: 32px;
+        }
+
+        &-list {
+            height: calc(100% - 42px);
+        }
+
+        &-list-notfunc {
+            height: 100%;
+        }
     }
 }
