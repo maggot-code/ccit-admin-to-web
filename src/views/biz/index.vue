@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 11:24:49
+ * @LastEditTime: 2022-09-13 13:10:32
  * @Description: 
 -->
 <template>
@@ -11,7 +11,13 @@
 </template>
 
 <script>
-import { provide, onMounted, onUnmounted } from "@vue/composition-api";
+import {
+  provide,
+  watchEffect,
+  onMounted,
+  onUnmounted,
+  unref,
+} from "@vue/composition-api";
 import { useRouterQuery } from "@/biz/Template/usecase/useRouterQuery";
 import { useState } from "@/biz/Template/usecase/useState";
 
@@ -20,18 +26,26 @@ export default {
   props: {},
   setup(props, { root }) {
     const { $route, $router } = root;
-    useRouterQuery($route, $router);
-    const { state, unusableState, usableState } = useState({ state: false });
+    const { gather, hasGather } = useRouterQuery($route, $router);
+    const { state, setupState } = useState({ state: false });
+
+    provide("bizParams", gather);
+
+    watchEffect(() => {
+      if (!unref(hasGather)) {
+        // 警告
+        console.warn("参数不足,或者格式错误");
+      }
+      setupState(hasGather);
+    });
 
     onMounted(() => {
-      unusableState();
-      // usableState();
-      console.log(gather);
+      setupState(false);
       console.log("biz install");
     });
 
     onUnmounted(() => {
-      unusableState();
+      setupState(false);
       console.log("biz uninstall");
     });
 
