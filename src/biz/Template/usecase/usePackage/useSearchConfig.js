@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:39:55
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 16:53:10
+ * @LastEditTime: 2022-09-14 17:30:49
  * @Description:
  * schema.formSchema:{
  *  inline: 是否行内表单（行内用来做搜索表单）
@@ -21,11 +21,12 @@ import { SearchConfigService } from "@/biz/Template/service/searchConfig.service
 export function useSearchConfig() {
   const { load, result, send } = SearchConfigService();
 
-  const searchRefs = ref();
   const token = ref("");
   const proName = ref("");
   const formSchema = computed(() => {
     return Object.assign({}, unref(result)?.formSchema, {
+      inlineMessage: false,
+      showMessage: false,
       inline: true,
       labelWidth: "auto",
     });
@@ -36,7 +37,6 @@ export function useSearchConfig() {
     load,
     send,
     data: {
-      searchRefs,
       token,
       proName,
       formSchema,

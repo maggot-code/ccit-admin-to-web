@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 16:54:49
+ * @LastEditTime: 2022-09-14 18:10:57
  * @Description: 
 -->
 <template>
@@ -12,7 +12,6 @@
       <ToggleLayout>
         <template #toggle-form>
           <mg-form
-            ref="searchRefs"
             :token="token"
             :proName="proName"
             :schema="{ formSchema, cellSchema }"
@@ -47,9 +46,8 @@
         </el-button-group>
       </div>
 
-      <div class="biz-curd-body-list" :class="className">
+      <div class="biz-curd-body-list" :class="className" ref="bodyRefs">
         <mg-table
-          ref="tableRefs"
           :resizeTable="resizeTable"
           :tableSchema="{ uiSchema, columnSchema }"
           :tableData="TestData.data"
@@ -68,7 +66,13 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { onMounted, unref, computed, ref } from "@vue/composition-api";
+import {
+  onMounted,
+  onBeforeUnmount,
+  unref,
+  computed,
+  ref,
+} from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
@@ -119,6 +123,8 @@ export default {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
       resizeTable.value = Date.now();
     });
+
+    onBeforeUnmount(() => {});
 
     return {
       resizeTable,
