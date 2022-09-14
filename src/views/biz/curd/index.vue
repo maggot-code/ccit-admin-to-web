@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 18:19:05
+ * @LastEditTime: 2022-09-14 09:27:23
  * @Description: 
 -->
 <template>
@@ -41,9 +41,10 @@
         </el-button-group>
       </div>
 
-      <div class="biz-curd-body-list">
+      <div class="biz-curd-body-list" :class="className">
         <mg-table
           ref="tableRefs"
+          :resizeTable="resizeTable"
           :tableSchema="{ uiSchema, columnSchema }"
           :tableData="TestData.data"
           :tableChoice="[]"
@@ -61,7 +62,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { onMounted, unref, computed } from "@vue/composition-api";
+import { onMounted, unref, computed, ref } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
@@ -93,6 +94,7 @@ export default {
   },
   props: {},
   setup(props) {
+    const resizeTable = ref(Date.now());
     const { config } = useTmpParams();
 
     const searchConfig = useSearchConfig();
@@ -101,14 +103,23 @@ export default {
     const loading = computed(() => {
       return !unref(listConfig.load) && !unref(searchConfig.load);
     });
+    const className = computed(() => {
+      resizeTable.value = Date.now();
+
+      return unref(listConfig.data.hasAllController)
+        ? []
+        : ["biz-curd-body-list-only"];
+    });
 
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
     });
 
     return {
+      resizeTable,
       config,
       loading,
+      className,
       ...listConfig.data,
       ...searchConfig.data,
       TestData,

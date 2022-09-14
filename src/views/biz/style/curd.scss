@@ -32,5 +32,9 @@
         &-list {
             height: calc(100% - 42px);
         }
+
+        &-list-only {
+            height: 100%;
+        }
     }
 }
