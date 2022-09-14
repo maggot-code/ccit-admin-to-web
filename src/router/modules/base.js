@@ -12,15 +12,26 @@ const baseRouter = [
   //   }
   // },
   {
-    path: '/home',
-    component: (resolve) => require(['@/views/basic/dashboard'], resolve),
-    name: 'home',
+    path: "/test",
+    component: (resolve) => require(["@/views/test"], resolve),
+    name: "test",
     meta: {
-      title: 'home',
-      icon: 'icon-ym icon-ym-nav-home',
+      title: "test",
+      icon: "icon-ym icon-ym-nav-home",
       affix: true,
-      zhTitle: '首页'
-    }
+      zhTitle: "测试",
+    },
+  },
+  {
+    path: "/home",
+    component: (resolve) => require(["@/views/basic/dashboard"], resolve),
+    name: "home",
+    meta: {
+      title: "home",
+      icon: "icon-ym icon-ym-nav-home",
+      affix: true,
+      zhTitle: "首页",
+    },
   },
   // {
   //   path: '/dashboard',
@@ -34,70 +45,70 @@ const baseRouter = [
   //   }
   // },
   {
-    path: '/messageRecord',
-    component: (resolve) => require(['@/views/basic/messageRecord'], resolve),
-    name: 'messageRecord',
+    path: "/messageRecord",
+    component: (resolve) => require(["@/views/basic/messageRecord"], resolve),
+    name: "messageRecord",
     meta: {
-      title: 'messageRecord',
+      title: "messageRecord",
       affix: false,
-      zhTitle: '消息中心',
-      icon: 'icon-ym icon-ym-sysNotice',
-    }
+      zhTitle: "消息中心",
+      icon: "icon-ym icon-ym-sysNotice",
+    },
   },
   {
-    path: '/previewModel',
-    component: (resolve) => require(['@/views/basic/previewModel'], resolve),
-    name: 'previewModel',
+    path: "/previewModel",
+    component: (resolve) => require(["@/views/basic/previewModel"], resolve),
+    name: "previewModel",
     meta: {
-      title: 'previewModel',
+      title: "previewModel",
       affix: false,
-      zhTitle: '功能预览',
-      icon: 'icon-ym icon-ym-btn-preview',
-    }
+      zhTitle: "功能预览",
+      icon: "icon-ym icon-ym-btn-preview",
+    },
   },
   {
-    path: '/profile',
-    component: (resolve) => require(['@/views/basic/profile'], resolve),
-    name: 'profile',
+    path: "/profile",
+    component: (resolve) => require(["@/views/basic/profile"], resolve),
+    name: "profile",
     meta: {
-      title: 'profile',
+      title: "profile",
       affix: false,
-      zhTitle: '个人信息',
-      icon: 'icon-ym icon-ym-user',
-    }
+      zhTitle: "个人信息",
+      icon: "icon-ym icon-ym-user",
+    },
   },
   {
-    path: '/portal-news',
-    component: (resolve) => require(['@/views/basic/portal/news'], resolve),
-    name: 'portal-news',
+    path: "/portal-news",
+    component: (resolve) => require(["@/views/basic/portal/news"], resolve),
+    name: "portal-news",
     meta: {
-      title: 'portalNews',
+      title: "portalNews",
       affix: false,
-      zhTitle: '资讯门户',
-      icon: 'ym-custom ym-custom-newspaper',
-    }
+      zhTitle: "资讯门户",
+      icon: "ym-custom ym-custom-newspaper",
+    },
   },
   {
-    path: '/workFlow/flowTodo',
-    component: (resolve) => require(['@/views/workFlow/flowTodo'], resolve),
-    name: 'flowTodo',
+    path: "/workFlow/flowTodo",
+    component: (resolve) => require(["@/views/workFlow/flowTodo"], resolve),
+    name: "flowTodo",
     meta: {
-      title: 'flowTodo',
+      title: "flowTodo",
       affix: false,
-      zhTitle: '待办事宜',
-      icon: 'icon-ym icon-ym-generator-todo',
-    }
+      zhTitle: "待办事宜",
+      icon: "icon-ym icon-ym-generator-todo",
+    },
   },
   {
-    path: '/workFlow/flowDone',
-    component: (resolve) => require(['@/views/workFlow/flowDone'], resolve),
-    name: 'flowDone',
+    path: "/workFlow/flowDone",
+    component: (resolve) => require(["@/views/workFlow/flowDone"], resolve),
+    name: "flowDone",
     meta: {
-      title: 'flowDone',
+      title: "flowDone",
       affix: false,
-      zhTitle: '已办事宜',
-      icon: 'icon-ym icon-ym-flowDone',
-    }
-  }
-]
-export default baseRouter
+      zhTitle: "已办事宜",
+      icon: "icon-ym icon-ym-flowDone",
+    },
+  },
+];
+export default baseRouter;
