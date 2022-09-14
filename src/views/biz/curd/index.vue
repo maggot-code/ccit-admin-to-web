@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 09:27:23
+ * @LastEditTime: 2022-09-14 09:30:33
  * @Description: 
 -->
 <template>
@@ -62,7 +62,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { onMounted, unref, computed, ref } from "@vue/composition-api";
+import { onMounted, watch, unref, computed, ref } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
@@ -104,15 +104,21 @@ export default {
       return !unref(listConfig.load) && !unref(searchConfig.load);
     });
     const className = computed(() => {
-      resizeTable.value = Date.now();
-
       return unref(listConfig.data.hasAllController)
         ? []
         : ["biz-curd-body-list-only"];
     });
 
+    // watch(
+    //   () => unref(className).length,
+    //   () => {
+    //     resizeTable.value = Date.now();
+    //   }
+    // );
+
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
+      resizeTable.value = Date.now();
     });
 
     return {
