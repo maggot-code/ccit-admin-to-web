@@ -3,26 +3,24 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 09:30:33
+ * @LastEditTime: 2022-09-14 10:03:21
  * @Description: 
 -->
 <template>
   <div class="biz biz-curd" v-loading="loading">
-    <div class="biz-curd-search">
-      <ToggleLayout>
-        <template #toggle-form>
-          <p>{{ date }}</p>
-        </template>
-        <template #toggle-btn>
-          <el-button size="mini" icon="el-icon-search" type="primary"
-            >查询</el-button
-          >
-          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
-            >重置</el-button
-          >
-        </template>
-      </ToggleLayout>
-    </div>
+    <ToggleLayout class="biz-curd-search">
+      <template #toggle-form>
+        <p>{{ date }}</p>
+      </template>
+      <template #toggle-btn>
+        <el-button size="mini" icon="el-icon-search" type="primary"
+          >查询</el-button
+        >
+        <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
+          >重置</el-button
+        >
+      </template>
+    </ToggleLayout>
 
     <div class="biz-curd-body">
       <div class="biz-curd-body-function" v-if="hasAllController">
@@ -62,7 +60,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { onMounted, watch, unref, computed, ref } from "@vue/composition-api";
+import { onMounted, unref, computed, ref } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import {
   useSearchConfig,
@@ -108,13 +106,6 @@ export default {
         ? []
         : ["biz-curd-body-list-only"];
     });
-
-    // watch(
-    //   () => unref(className).length,
-    //   () => {
-    //     resizeTable.value = Date.now();
-    //   }
-    // );
 
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);

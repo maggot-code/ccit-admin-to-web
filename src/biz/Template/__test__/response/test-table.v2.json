@@ -1,0 +1,56 @@
+{
+    "keyName": "projid",
+    "uiSchema": {
+        "sortProp": "projid",
+        "sortOrder": "ascending",
+        "stripe": true,
+        "isPage": true,
+        "isChoice": true,
+        "isIndex": true,
+        "size": "small",
+        "handleFixed": "right"
+    },
+    "controller": [
+        {
+            "mode": "edit",
+            "type": "warning",
+            "icon": "el-icon-eleme",
+            "useRow": true,
+            "useAll": false,
+            "label": "修改"
+        },
+        {
+            "mode": "delete",
+            "type": "danger",
+            "icon": "el-icon-eleme",
+            "useRow": true,
+            "useAll": false,
+            "label": "删除"
+        }
+    ],
+    "columnSchema": [
+        {
+            "mold": "default",
+            "label": "姓名",
+            "headerAlign": "left",
+            "isSort": true,
+            "prop": "name"
+        },
+        {
+            "mold": "default",
+            "label": "地址",
+            "headerAlign": "left",
+            "isSort": true,
+            "prop": "address"
+        },
+        {
+            "mold": "default",
+            "formatDate": "yyyy-MM-dd hh:mm:ss",
+            "label": "日期",
+            "align": "center",
+            "isSort": true,
+            "width": 160,
+            "prop": "date"
+        }
+    ]
+}
