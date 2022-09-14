@@ -56,6 +56,13 @@ module.exports = {
           "^/dev": "",
         },
       },
+      "/api/node": {
+        target: "http://127.0.0.1:8000/api/node",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api/node": "",
+        },
+      },
     },
   },
   //配置多页面入口
