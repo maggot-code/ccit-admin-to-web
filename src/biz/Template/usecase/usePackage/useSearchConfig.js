@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:39:55
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 15:48:36
+ * @LastEditTime: 2022-09-14 16:53:10
  * @Description:
  * schema.formSchema:{
  *  inline: 是否行内表单（行内用来做搜索表单）
@@ -15,19 +15,32 @@
  * proName:""
  * token:""
  */
-import { unref, computed } from "@vue/composition-api";
+import { unref, computed, ref } from "@vue/composition-api";
 import { SearchConfigService } from "@/biz/Template/service/searchConfig.service";
 
 export function useSearchConfig() {
   const { load, result, send } = SearchConfigService();
 
-  const date = computed(() => unref(result)?.date);
+  const searchRefs = ref();
+  const token = ref("");
+  const proName = ref("");
+  const formSchema = computed(() => {
+    return Object.assign({}, unref(result)?.formSchema, {
+      inline: true,
+      labelWidth: "auto",
+    });
+  });
+  const cellSchema = computed(() => unref(result)?.cellSchema ?? []);
 
   return {
     load,
     send,
     data: {
-      date,
+      searchRefs,
+      token,
+      proName,
+      formSchema,
+      cellSchema,
     },
   };
 }

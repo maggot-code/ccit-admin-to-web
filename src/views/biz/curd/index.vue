@@ -3,24 +3,32 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 10:03:21
+ * @LastEditTime: 2022-09-14 16:54:49
  * @Description: 
 -->
 <template>
   <div class="biz biz-curd" v-loading="loading">
-    <ToggleLayout class="biz-curd-search">
-      <template #toggle-form>
-        <p>{{ date }}</p>
-      </template>
-      <template #toggle-btn>
-        <el-button size="mini" icon="el-icon-search" type="primary"
-          >查询</el-button
-        >
-        <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
-          >重置</el-button
-        >
-      </template>
-    </ToggleLayout>
+    <div class="biz-curd-search">
+      <ToggleLayout>
+        <template #toggle-form>
+          <mg-form
+            ref="searchRefs"
+            :token="token"
+            :proName="proName"
+            :schema="{ formSchema, cellSchema }"
+            :job="{}"
+          ></mg-form>
+        </template>
+        <template #toggle-btn>
+          <el-button size="mini" icon="el-icon-search" type="primary"
+            >查询</el-button
+          >
+          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
+            >重置</el-button
+          >
+        </template>
+      </ToggleLayout>
+    </div>
 
     <div class="biz-curd-body">
       <div class="biz-curd-body-function" v-if="hasAllController">

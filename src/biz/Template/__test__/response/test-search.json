@@ -1,3 +1,100 @@
 {
-    "date": "2019-01-01"
+    "cellSchema": [
+        {
+            "field": "truename",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索姓名"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "jobno",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索教工号"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "truename1",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索姓名"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "jobno1",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索教工号"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "truename2",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索姓名"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "jobno2",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索教工号"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "truename3",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索姓名"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        },
+        {
+            "field": "jobno3",
+            "uiSchema": {
+                "col": 12,
+                "clearable": true,
+                "placeholder": "请输入搜索教工号"
+            },
+            "ruleSchema": [],
+            "mold": "text",
+            "componentName": "mg-input",
+            "value": ""
+        }
+    ]
 }
