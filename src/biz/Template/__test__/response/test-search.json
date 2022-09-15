@@ -5,14 +5,9 @@
             "uiSchema": {
                 "col": 12,
                 "clearable": true,
-                "label": "姓名"
+                "placeholder": "请输入搜索姓名"
             },
-            "ruleSchema": [
-                {
-                    "message": "账号为必填，请填写。",
-                    "required": true
-                }
-            ],
+            "ruleSchema": [],
             "mold": "text",
             "componentName": "mg-input",
             "value": ""
