@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-02-23 10:01:07
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-14 10:08:20
+ * @LastEditTime: 2022-09-15 13:16:56
  * @Description:
  */
 import Vue from "vue";
@@ -35,8 +35,8 @@ import * as filters from "./filters"; // global filters
 // 自定义按钮权限指令
 import permission from "@/directive/permission";
 
-// import elDragDialog from '@/directive/el-drag-dialog/el-drag-dialog' // 引入移动事件（el-drag-dialog.js的内容为上面的代码块）
-// Vue.directive('el-drag-dialog', elDragDialog);//添加标签事件绑定 可以放大移动弹窗
+import elDragDialog from "@/directive/el-drag-dialog"; // 引入移动事件（el-drag-dialog.js的内容为上面的代码块）
+Vue.directive("el-drag-dialog", elDragDialog); //添加标签事件绑定 可以放大移动弹窗
 
 Vue.prototype.$http = service;
 Vue.prototype.$axios = service;
