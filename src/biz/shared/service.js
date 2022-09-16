@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Template\entity\Service.js
+ * @FilePath: \ccit-admin-to-web\src\biz\shared\service.js
  * @Author: maggot-code
- * @Date: 2022-09-13 15:00:34
+ * @Date: 2022-09-16 13:54:21
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 16:24:39
+ * @LastEditTime: 2022-09-16 13:54:30
  * @Description:
  */
 import { ref, shallowRef, unref, computed } from "@vue/composition-api";

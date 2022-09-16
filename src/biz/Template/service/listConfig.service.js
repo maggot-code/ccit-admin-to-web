@@ -3,12 +3,12 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:35:55
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 11:28:37
+ * @LastEditTime: 2022-09-16 13:55:22
  * @Description:
  */
 import { inject } from "@vue/composition-api";
 import { ListConfigSymbolKey } from "@/biz/Template/shared/context";
-import { Service } from "@/biz/Template/entity/Service";
+import { Service } from "@/biz/shared/service";
 
 import { mockRequest } from "@/biz/shared/mock";
 import MockResponse from "../__test__/response/test-table.json";

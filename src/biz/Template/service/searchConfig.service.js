@@ -8,7 +8,7 @@
  */
 import { inject } from "@vue/composition-api";
 import { SearchConfigSymbolKey } from "@/biz/Template/shared/context";
-import { Service } from "@/biz/Template/entity/Service";
+import { Service } from "@/biz/shared/service";
 
 import { mockRequest } from "@/biz/shared/mock";
 import MockResponse from "../__test__/response/test-search.json";

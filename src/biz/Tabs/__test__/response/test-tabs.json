@@ -1,0 +1,20 @@
+{
+    "active": "aaa",
+    "schema": [
+        {
+            "id": "aaa",
+            "label": "AAA",
+            "template": "tmp AaA"
+        },
+        {
+            "id": "bbb",
+            "label": "BBB",
+            "template": "tmp BbB"
+        },
+        {
+            "id": "ccc",
+            "label": "CCC",
+            "template": "tmp CcC"
+        }
+    ]
+}

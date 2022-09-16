@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:14:24
+ * @LastEditTime: 2022-09-16 14:22:33
  * @Description: 
 -->
 <template>
@@ -66,13 +66,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import {
-  onMounted,
-  onBeforeUnmount,
-  unref,
-  computed,
-  ref,
-} from "@vue/composition-api";
+import { onMounted, unref, computed, ref } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 import {
@@ -130,8 +124,6 @@ export default {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
       resizeTable.value = Date.now();
     });
-
-    onBeforeUnmount(() => {});
 
     return {
       resizeTable,
