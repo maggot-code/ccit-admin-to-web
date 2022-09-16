@@ -3,14 +3,22 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 14:33:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 14:41:25
+ * @LastEditTime: 2022-09-16 15:49:16
  * @Description: 
 -->
 <template>
-  <div class="biz-form">
-    <mg-form ref="formRefs" proName="api/node" :schema="schema" :job="job">
+  <div class="biz-form" v-loading="!loading">
+    <mg-form
+      class="biz-form-core"
+      ref="formRefs"
+      :token="token"
+      :proName="proName"
+      :schema="{ formSchema, cellSchema }"
+      :job="{}"
+    >
       <template #form-button>
         <el-button
+          v-show="loading"
           size="mini"
           icon="el-icon-search"
           type="primary"
@@ -18,6 +26,7 @@
           >提交</el-button
         >
         <el-button
+          v-show="loading"
           size="mini"
           icon="el-icon-search"
           type="primary"
@@ -25,6 +34,7 @@
           >数据</el-button
         >
         <el-button
+          v-show="loading"
           size="mini"
           icon="el-icon-refresh-right"
           :plain="true"
@@ -38,21 +48,22 @@
 
 <script>
 import { onMounted, unref, ref } from "@vue/composition-api";
-import TestForm from "static/schema/test-form.json";
-import TestSearchForm from "static/schema/test-search-form.json";
+import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
+import { useDialog } from "@/biz/Dialog/usecase/useDialog";
+import { useFormConfig } from "@/biz/Form/usecase/usePackage";
+import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
+
 export default {
   name: "BizForm",
   mixins: [],
   components: {},
   props: {},
-  setup() {
+  setup(props) {
     const formRefs = ref();
-    const { schema } = TestForm;
-    const { schema: searchSchema } = TestSearchForm;
+    const { config } = useTmpParams();
+    // const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
 
-    onMounted(() => {
-      console.log(unref(formRefs));
-    });
+    const formConfig = useFormConfig();
 
     function handlerSubmit() {
       const { validate, data } = unref(formRefs).formOutput();
@@ -72,11 +83,15 @@ export default {
       unref(formRefs).resetForm();
     }
 
+    onMounted(async () => {
+      await formConfig.send();
+    });
+
     return {
+      loading: formConfig.load,
+      config,
       formRefs,
-      schema,
-      searchSchema,
-      job: {},
+      ...formConfig.data,
       handlerSubmit,
       handlerData,
       handlerReset,
