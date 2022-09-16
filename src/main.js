@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-02-23 10:01:07
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 13:16:56
+ * @LastEditTime: 2022-09-16 16:18:36
  * @Description:
  */
 import Vue from "vue";
@@ -23,7 +23,7 @@ import "./assets/scss/theme.scss"; // 主题
 import App from "./App";
 import store from "./store";
 import router from "./router";
-import MGform from "maggot-form";
+import MGform from "maggot-form/src";
 import MGtable from "maggot-table";
 
 import i18n from "./lang"; // internationalization
