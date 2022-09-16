@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-15 14:25:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 18:01:38
+ * @LastEditTime: 2022-09-16 09:53:09
  * @Description:
  */
 import Vue from "vue";
@@ -25,7 +25,6 @@ export function defineDialog(options = {}) {
       .filter(Boolean)
   );
   function deleteDialog(key) {
-    console.log(key);
     const index = unref(cache).findIndex((item) => item === key);
     if (index <= -1) return;
 
@@ -35,6 +34,7 @@ export function defineDialog(options = {}) {
   function setupDialog(props = {}) {
     const key = uuidv4();
     const store = Dialog({
+      key,
       props,
       release: () => deleteDialog(key),
     });

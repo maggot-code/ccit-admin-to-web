@@ -3,20 +3,17 @@
  * @Author: maggot-code
  * @Date: 2022-09-15 15:05:19
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 18:02:03
+ * @LastEditTime: 2022-09-16 10:00:23
  * @Description:
  */
 import {
+  provide,
   defineAsyncComponent,
   ref,
   computed,
   onBeforeUnmount,
 } from "@vue/composition-api";
-
-const aa = {
-  add: () => import(`@/views/dialog/add`),
-  edit: () => import(`@/views/dialog/edit`),
-};
+import DialogTmp from "@/views/dialog";
 
 const defProps = {
   fullscreen: false,
@@ -34,15 +31,17 @@ const defProps = {
 };
 
 export function Dialog(options = {}) {
-  const { release, template } = options;
+  const { key, release, template } = options;
   const props = Object.assign({}, defProps, options.props);
 
   const visible = ref(true);
   const bind = computed(() => props);
 
-  // `../../../views/dialog/add/index.vue`;
-  // 动态加载vue3组件
-  const toComponent = defineAsyncComponent(aa[template] ?? aa.add);
+  const toComponent = defineAsyncComponent(
+    DialogTmp[template] ?? DialogTmp.unknow
+  );
+
+  provide(key, {});
 
   onBeforeUnmount(() => {
     release();

@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-14 10:05:43
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 17:19:40
+ * @LastEditTime: 2022-09-16 09:55:40
  * @Description: 
 -->
 <template>
@@ -18,7 +18,10 @@
       >
         <template #default>
           <div class="biz-dialog-body">
-            <component :is="dialog.toComponent"></component>
+            <component
+              :is="dialog.toComponent"
+              :keyword="dialog.key"
+            ></component>
           </div>
         </template>
 

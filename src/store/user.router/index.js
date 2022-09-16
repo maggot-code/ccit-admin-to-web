@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-09 14:02:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-09 18:01:04
+ * @LastEditTime: 2022-09-16 09:58:55
  * @Description:
  */
 import { TemplateAccess, TemplateKeys } from "./template";
@@ -45,7 +45,7 @@ function useTemplate({ template, router }) {
 export function isBizRouter(router) {
   const { type } = router;
 
-  return TemplateKeys.includes(`${type ?? "unknow"}`);
+  return TemplateKeys.includes(type);
 }
 
 export function useBizRouter() {
