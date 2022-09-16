@@ -3,12 +3,13 @@
  * @Author: maggot-code
  * @Date: 2022-09-15 14:25:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:19:02
+ * @LastEditTime: 2022-09-16 10:38:03
  * @Description:
  */
 import {
   provide,
   onUnmounted,
+  watch,
   unref,
   ref,
   computed,
@@ -37,15 +38,15 @@ export function defineDialog(options = {}) {
     unref(cache).splice(index, 1);
   }
   function setupDialog(props = {}) {
-    const key = uuidv4();
+    const keyword = uuidv4();
     const store = Dialog({
-      key,
+      keyword,
       props,
-      release: () => deleteDialog(key),
+      release: () => deleteDialog(keyword),
     });
 
-    unref(cache).push(key);
-    DialogStore.set(key, store);
+    unref(cache).push(keyword);
+    DialogStore.set(keyword, store);
     return [store, true];
   }
 

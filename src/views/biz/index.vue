@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:07:54
+ * @LastEditTime: 2022-09-16 10:37:28
  * @Description: 
 -->
 <template>
@@ -21,10 +21,7 @@
       >
         <template #default>
           <div class="biz-dialog-body">
-            <component
-              :is="dialog.toComponent"
-              :keyword="dialog.key"
-            ></component>
+            <component :is="dialog.toComponent" v-bind="dialog"></component>
           </div>
         </template>
 
@@ -39,6 +36,7 @@
 
         <template #footer>
           <!-- TODO -->
+          <h1>底部</h1>
         </template>
       </el-dialog>
     </template>
