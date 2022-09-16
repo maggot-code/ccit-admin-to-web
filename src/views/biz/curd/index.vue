@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-15 11:28:47
+ * @LastEditTime: 2022-09-16 10:14:24
  * @Description: 
 -->
 <template>
@@ -74,10 +74,12 @@ import {
   ref,
 } from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
+import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 import {
   useSearchConfig,
   useListConfig,
 } from "@/biz/Template/usecase/usePackage";
+import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
 
 const TestData = {
   total: 107,
@@ -106,6 +108,7 @@ export default {
   setup(props) {
     const resizeTable = ref(Date.now());
     const { config } = useTmpParams();
+    const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
 
     const searchConfig = useSearchConfig();
     const listConfig = useListConfig();
@@ -118,6 +121,10 @@ export default {
         ? []
         : ["biz-curd-body-list-only"];
     });
+
+    function handlerAllControl() {
+      handler.setupDialog();
+    }
 
     onMounted(async () => {
       await Promise.allSettled([searchConfig.send(), listConfig.send()]);
@@ -134,6 +141,7 @@ export default {
       ...listConfig.data,
       ...searchConfig.data,
       TestData,
+      handlerAllControl,
     };
   },
 };

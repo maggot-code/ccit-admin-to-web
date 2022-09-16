@@ -3,11 +3,13 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:52:45
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 13:55:41
+ * @LastEditTime: 2022-09-16 10:06:53
  * @Description:
  */
 // 模板参数注入关键字
 export const TmpParamsSymbolKey = Symbol("TmpParams");
+// 模板弹框注入关键字
+export const TmpDialogSymbolKey = Symbol("TmpDialog");
 
 // 搜索配置服务注入关键字
 export const SearchConfigSymbolKey = Symbol("SearchConfig");

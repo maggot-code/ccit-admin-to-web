@@ -3,16 +3,10 @@
  * @Author: maggot-code
  * @Date: 2022-09-15 15:05:19
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:00:23
+ * @LastEditTime: 2022-09-16 10:19:28
  * @Description:
  */
-import {
-  provide,
-  defineAsyncComponent,
-  ref,
-  computed,
-  onBeforeUnmount,
-} from "@vue/composition-api";
+import { defineAsyncComponent, ref, computed } from "@vue/composition-api";
 import DialogTmp from "@/views/dialog";
 
 const defProps = {
@@ -31,7 +25,7 @@ const defProps = {
 };
 
 export function Dialog(options = {}) {
-  const { key, release, template } = options;
+  const { release, template } = options;
   const props = Object.assign({}, defProps, options.props);
 
   const visible = ref(true);
@@ -40,12 +34,6 @@ export function Dialog(options = {}) {
   const toComponent = defineAsyncComponent(
     DialogTmp[template] ?? DialogTmp.unknow
   );
-
-  provide(key, {});
-
-  onBeforeUnmount(() => {
-    release();
-  });
 
   return {
     visible,

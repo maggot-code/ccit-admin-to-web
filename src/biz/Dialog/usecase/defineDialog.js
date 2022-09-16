@@ -3,11 +3,16 @@
  * @Author: maggot-code
  * @Date: 2022-09-15 14:25:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 09:53:09
+ * @LastEditTime: 2022-09-16 10:19:02
  * @Description:
  */
-import Vue from "vue";
-import { onUnmounted, unref, ref, computed } from "@vue/composition-api";
+import {
+  provide,
+  onUnmounted,
+  unref,
+  ref,
+  computed,
+} from "@vue/composition-api";
 import { v4 as uuidv4 } from "uuid";
 import { DialogStore, getStore } from "@/biz/Dialog/entity/Store";
 import { Dialog } from "@/biz/Dialog/entity/Dialog";
@@ -41,7 +46,10 @@ export function defineDialog(options = {}) {
 
     unref(cache).push(key);
     DialogStore.set(key, store);
+    return [store, true];
   }
+
+  provide(namespace, { setupDialog, deleteDialog });
 
   onUnmounted(() => {
     unref(cache).forEach(deleteDialog);
