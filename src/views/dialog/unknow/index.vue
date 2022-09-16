@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 09:35:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:38:38
+ * @LastEditTime: 2022-09-16 13:08:42
  * @Description: 
 -->
 <template>
@@ -14,32 +14,28 @@
 </template>
 
 <script>
-import { onBeforeUnmount } from "@vue/composition-api";
 import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 export default {
   name: "BizUnknow",
   mixins: [],
   components: {},
-  props: {
-    keyword: {
-      type: String,
-      default: "",
-    },
-    release: {
-      type: Function,
-      default: () => {},
-    },
-  },
+  props: {},
   setup(props) {
     const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
+    const a = ["50%", "70%", "200px"];
     function handleraa() {
-      handler.setupDialog();
+      // 随机获取a
+      const index = Math.floor(Math.random() * a.length);
+      handler.setupDialog({
+        bind: {
+          width: a[index],
+        },
+        title: {
+          text: a[index],
+        },
+      });
     }
-
-    onBeforeUnmount(() => {
-      props.release();
-    });
 
     return {
       handleraa,

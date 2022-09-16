@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:37:28
+ * @LastEditTime: 2022-09-16 11:34:45
  * @Description: 
 -->
 <template>
@@ -12,7 +12,6 @@
 
     <!-- before-close -->
     <template v-for="dialog in dialogs">
-      <!-- before-close -->
       <el-dialog
         v-el-drag-dialog
         v-bind="dialog.bind.value"
@@ -21,22 +20,19 @@
       >
         <template #default>
           <div class="biz-dialog-body">
-            <component :is="dialog.toComponent" v-bind="dialog"></component>
+            <component :is="dialog.toComponent"></component>
           </div>
         </template>
 
         <template #title>
-          <div class="biz-dialog-title">
-            <p class="biz-dialog-title-content">标题渲染位置</p>
-            <div class="biz-dialog-title-control">
-              <i class="icon-ym icon-ym-nav-close" @click="dialog.release"></i>
-            </div>
-          </div>
+          <DialogTitle
+            v-bind="dialog.title.value"
+            :release="dialog.release"
+          ></DialogTitle>
         </template>
 
         <template #footer>
           <!-- TODO -->
-          <h1>底部</h1>
         </template>
       </el-dialog>
     </template>
@@ -44,6 +40,8 @@
 </template>
 
 <script>
+import DialogTitle from "@/biz/Dialog/views/DialogTitle.vue";
+
 import {
   provide,
   watchEffect,
@@ -61,6 +59,9 @@ import { defineDialog } from "@/biz/Dialog/usecase/defineDialog";
 
 export default {
   name: "Biz",
+  components: {
+    DialogTitle,
+  },
   props: {},
   setup(props, { root }) {
     const dialog = defineDialog({ namespace: TmpDialogSymbolKey });
@@ -97,5 +98,5 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@bizv/style/container.scss";
-@import "@/biz/Dialog/shared/style/index.scss";
+@import "@/biz/Dialog/shared/style/body.scss";
 </style>
