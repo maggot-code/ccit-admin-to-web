@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-02-23 10:01:19
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-08 11:10:40
+ * @LastEditTime: 2022-09-16 18:18:45
  * @Description:
  */
 module.exports = {
@@ -17,4 +17,5 @@ module.exports = {
       ],
     },
   },
+  sourceType: "unambiguous",
 };
