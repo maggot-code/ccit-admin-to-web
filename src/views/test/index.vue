@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-14 10:05:43
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 14:24:28
+ * @LastEditTime: 2022-09-16 14:46:16
  * @Description: 
 -->
 <template>
@@ -40,14 +40,14 @@
 
 <script>
 import { onMounted } from "@vue/composition-api";
-import { defineTabs } from "@/biz/Tabs/usecase/defineTabs";
+import { useTabs } from "@/biz/Tabs/usecase/useTabs";
 export default {
   name: "Test",
   mixins: [],
   components: {},
   props: {},
   setup() {
-    const tabs = defineTabs();
+    const tabs = useTabs();
     function beforeLeave() {
       return Promise.resolve();
     }

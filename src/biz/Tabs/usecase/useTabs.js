@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 13:51:47
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 14:23:17
+ * @LastEditTime: 2022-09-16 14:46:30
  * @Description:
  */
 import {
@@ -16,7 +16,7 @@ import {
 } from "@vue/composition-api";
 import { TabConfigService } from "@/biz/Tabs/service/tabConfig.service";
 
-export function defineTabs() {
+export function useTabs() {
   const { load, result, send } = TabConfigService();
   const active = ref("");
   const schema = shallowRef([]);
@@ -54,4 +54,4 @@ export function defineTabs() {
   };
 }
 
-export default defineTabs;
+export default useTabs;
