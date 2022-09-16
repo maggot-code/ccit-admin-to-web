@@ -679,36 +679,6 @@
                 "mold": "textarea",
                 "componentName": "mg-input",
                 "value": ""
-            },
-            {
-                "dataSchema": {
-                    "enums": [],
-                    "childrenKey": "children",
-                    "lib": {
-                        "codeid": "UM",
-                        "parentid": "0"
-                    },
-                    "step": "3",
-                    "api": "/SystemManage/SM_Department/GetListForTree3",
-                    "valueField": "id",
-                    "textField": "text"
-                },
-                "field": "company",
-                "uiSchema": {
-                    "col": 12,
-                    "clearable": true,
-                    "label": "承担单位",
-                    "checkStrictly": true
-                },
-                "ruleSchema": [
-                    {
-                        "message": "承担单位为必填，请填写。",
-                        "required": true
-                    }
-                ],
-                "mold": "default",
-                "componentName": "mg-cascader",
-                "value": "001003"
             }
         ]
     }

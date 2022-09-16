@@ -3,40 +3,95 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 14:33:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 14:34:03
+ * @LastEditTime: 2022-09-16 14:41:25
  * @Description: 
 -->
 <template>
-  <div class="biz-form">biz form</div>
+  <div class="biz-form">
+    <mg-form ref="formRefs" proName="api/node" :schema="schema" :job="job">
+      <template #form-button>
+        <el-button
+          size="mini"
+          icon="el-icon-search"
+          type="primary"
+          @click="handlerSubmit"
+          >提交</el-button
+        >
+        <el-button
+          size="mini"
+          icon="el-icon-search"
+          type="primary"
+          @click="handlerData"
+          >数据</el-button
+        >
+        <el-button
+          size="mini"
+          icon="el-icon-refresh-right"
+          :plain="true"
+          @click="handlerReset"
+          >重置</el-button
+        >
+      </template>
+    </mg-form>
+  </div>
 </template>
 
 <script>
+import { onMounted, unref, ref } from "@vue/composition-api";
+import TestForm from "static/schema/test-form.json";
+import TestSearchForm from "static/schema/test-search-form.json";
 export default {
   name: "BizForm",
   mixins: [],
   components: {},
   props: {},
-  data() {
-    //这里存放数据
-    return {};
+  setup() {
+    const formRefs = ref();
+    const { schema } = TestForm;
+    const { schema: searchSchema } = TestSearchForm;
+
+    onMounted(() => {
+      console.log(unref(formRefs));
+    });
+
+    function handlerSubmit() {
+      const { validate, data } = unref(formRefs).formOutput();
+      validate()
+        .then((res) => {
+          console.log(res, data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    function handlerData() {
+      const { data } = unref(formRefs).formOutput();
+      console.log(data);
+    }
+    function handlerReset() {
+      unref(formRefs).resetForm();
+    }
+
+    return {
+      formRefs,
+      schema,
+      searchSchema,
+      job: {},
+      handlerSubmit,
+      handlerData,
+      handlerReset,
+    };
   },
-  //监听属性 类似于data概念
-  computed: {},
-  //监控data中的数据变化
-  watch: {},
-  //方法集合
-  methods: {},
-  //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
-  //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
-  beforeCreate() {}, //生命周期 - 创建之前
-  beforeMount() {}, //生命周期 - 挂载之前
-  beforeUpdate() {}, //生命周期 - 更新之前
-  updated() {}, //生命周期 - 更新之后
-  beforeDestroy() {}, //生命周期 - 销毁之前
-  destroyed() {}, //生命周期 - 销毁完成
-  activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.biz-form {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+</style>
