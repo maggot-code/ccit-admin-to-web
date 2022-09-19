@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 13:40:38
+ * @LastEditTime: 2022-09-19 15:17:23
  * @Description: 
 -->
 <template>
@@ -12,6 +12,7 @@
       <ToggleLayout>
         <template #toggle-form>
           <mg-form
+            ref="searchRefs"
             :token="token"
             :proName="proName"
             :schema="{ formSchema, cellSchema }"
@@ -19,10 +20,18 @@
           ></mg-form>
         </template>
         <template #toggle-btn>
-          <el-button size="mini" icon="el-icon-search" type="primary"
+          <el-button
+            size="mini"
+            icon="el-icon-search"
+            type="primary"
+            @click="handlerQuery"
             >查询</el-button
           >
-          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
+          <el-button
+            size="mini"
+            icon="el-icon-refresh-right"
+            :plain="true"
+            @click="handlerReset"
             >重置</el-button
           >
         </template>
@@ -38,6 +47,7 @@
               :type="control.type"
               :icon="control.icon"
               size="mini"
+              @click="handleAllControll(control)"
             >
               {{ control.label }}
             </el-button>
@@ -46,7 +56,10 @@
       </div>
 
       <div class="biz-curd-body-list" :class="className" ref="bodyRefs">
+        <!-- @rowEnter="rowEnter" -->
+        <!-- @rowLeave="rowLeave" -->
         <mg-table
+          ref="listRefs"
           :loadPage="false"
           :defaultPageSize="20"
           :resizeTable="resizeTable"
@@ -55,6 +68,11 @@
           :tableChoice="[]"
           :tableData="data"
           :total="total"
+          @onChoice="onChoice"
+          @tableHandle="tableHandle"
+          @tableParams="tableParams"
+          @cellEvent="cellEvent"
+          @handleRow="handleRow"
         >
         </mg-table>
       </div>
@@ -76,7 +94,9 @@ import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 import {
   useSearchConfig,
+  useSearchAction,
   useListConfig,
+  useListAction,
   useDataSource,
 } from "@/biz/Template/usecase/usePackage";
 import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
@@ -93,7 +113,15 @@ export default {
     const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
 
     const searchConfig = useSearchConfig();
+    const searchAction = useSearchAction({
+      config: searchConfig,
+    });
+
     const listConfig = useListConfig();
+    const listAction = useListAction({
+      config: listConfig,
+    });
+
     const dataSource = useDataSource();
 
     const actionReady = computed(() => {
@@ -106,11 +134,12 @@ export default {
     });
 
     watchEffect(async () => {
-      console.log(unref(actionReady));
       if (unref(actionReady)) return;
-
       // TODO... params data
-      await dataSource.send();
+      await dataSource.send(
+        unref(listAction.listParams),
+        unref(searchAction.searchData)
+      );
     });
     onMounted(async () => {
       await Promise.allSettled([
@@ -125,8 +154,10 @@ export default {
       config,
       className,
       loading: dataSource.load,
-      ...listConfig.data,
       ...searchConfig.data,
+      ...searchAction.data,
+      ...listConfig.data,
+      ...listAction.data,
       ...dataSource.data,
     };
   },

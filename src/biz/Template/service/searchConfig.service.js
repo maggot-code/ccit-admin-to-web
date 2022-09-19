@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:31:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 13:20:41
+ * @LastEditTime: 2022-09-19 14:44:24
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -17,7 +17,6 @@ import MockResponse from "../__test__/response/director.search.json";
 const ServiceAddress = "/api/biz/search/config";
 
 function BizSearchConfig({ params, data }) {
-  console.log(params);
   // axios
   // return request();
 

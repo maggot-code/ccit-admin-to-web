@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-19 13:23:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 13:27:03
+ * @LastEditTime: 2022-09-19 15:17:39
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -15,7 +15,6 @@ import { mockRequest } from "@/biz/shared/mock";
 const ServiceAddress = "/api/biz/data/source";
 
 function BizDataSource({ params, data }) {
-  console.log(params);
   // axios
   // return request({})
   const Response = {
@@ -63,6 +62,7 @@ export function DataSourceService() {
 
   const service = Service(request);
   function send(params, data) {
+    console.log(params, data);
     return service.execute({ params, data });
   }
 

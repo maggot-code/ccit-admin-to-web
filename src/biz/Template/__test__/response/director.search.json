@@ -8,7 +8,7 @@
             "ruleSchema": [],
             "mold": "text",
             "componentName": "mg-input",
-            "value": ""
+            "value": "22"
         },
         {
             "field": "searchstartstarttime",
@@ -68,23 +68,6 @@
             "ruleSchema": [],
             "mold": "default",
             "componentName": "mg-select",
-            "value": ""
-        },
-        {
-            "dataSchema": {
-                "isAttach": true,
-                "attachField": "departmentidname",
-                "api": "/SystemManage/SM_Users/GetListForCombobox",
-                "valueField": "userid",
-                "textField": "truename"
-            },
-            "field": "searchuserid",
-            "uiSchema": {
-                "placeholder": "负责人查询"
-            },
-            "ruleSchema": [],
-            "mold": "default",
-            "componentName": "mg-autocomplete",
             "value": ""
         }
     ]

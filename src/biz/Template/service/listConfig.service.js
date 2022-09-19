@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:35:55
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 13:22:01
+ * @LastEditTime: 2022-09-19 14:44:29
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -17,7 +17,6 @@ import MockResponse from "../__test__/response/director.list.json";
 const ServiceAddress = "/api/biz/list/config";
 
 function BizListConfig({ params, data }) {
-  console.log(params);
   // axios
   // return request({})
 
