@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:35:55
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 13:55:22
+ * @LastEditTime: 2022-09-19 11:15:51
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -11,7 +11,8 @@ import { ListConfigSymbolKey } from "@/biz/Template/shared/context";
 import { Service } from "@/biz/shared/service";
 
 import { mockRequest } from "@/biz/shared/mock";
-import MockResponse from "../__test__/response/test-table.json";
+// import MockResponse from "../__test__/response/test-table.json";
+import MockResponse from "../__test__/response/director.list.json";
 
 const ServiceAddress = "/api/biz/list/config";
 

@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:31:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 16:26:10
+ * @LastEditTime: 2022-09-19 11:11:40
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -11,7 +11,8 @@ import { SearchConfigSymbolKey } from "@/biz/Template/shared/context";
 import { Service } from "@/biz/shared/service";
 
 import { mockRequest } from "@/biz/shared/mock";
-import MockResponse from "../__test__/response/test-search.json";
+// import MockResponse from "../__test__/response/test-search.json";
+import MockResponse from "../__test__/response/director.search.json";
 
 const ServiceAddress = "/api/biz/search/config";
 
