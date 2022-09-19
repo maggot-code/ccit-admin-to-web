@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:31:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 11:11:40
+ * @LastEditTime: 2022-09-19 13:20:41
  * @Description:
  */
 import { inject } from "@vue/composition-api";
@@ -16,7 +16,8 @@ import MockResponse from "../__test__/response/director.search.json";
 
 const ServiceAddress = "/api/biz/search/config";
 
-function BizSearchConfig() {
+function BizSearchConfig({ params, data }) {
+  console.log(params);
   // axios
   // return request();
 
@@ -27,8 +28,8 @@ export function SearchConfigService() {
   const request = inject(SearchConfigSymbolKey, BizSearchConfig);
 
   const service = Service(request);
-  function send() {
-    return service.execute();
+  function send(params, data) {
+    return service.execute({ params, data });
   }
 
   // not return TODO ...

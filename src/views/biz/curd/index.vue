@@ -3,11 +3,11 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 11:31:53
+ * @LastEditTime: 2022-09-19 13:40:38
  * @Description: 
 -->
 <template>
-  <div class="biz biz-curd" v-loading="loading">
+  <div class="biz biz-curd" v-loading="!loading">
     <div class="biz-curd-search">
       <ToggleLayout>
         <template #toggle-form>
@@ -47,14 +47,14 @@
 
       <div class="biz-curd-body-list" :class="className" ref="bodyRefs">
         <mg-table
-          :resizeTable="resizeTable"
-          :tableSchema="{ uiSchema, columnSchema }"
-          :tableData="TestData.data"
-          :tableChoice="[]"
-          :total="TestData.total"
-          :controller="controller"
-          :defaultPageSize="20"
           :loadPage="false"
+          :defaultPageSize="20"
+          :resizeTable="resizeTable"
+          :controller="controller"
+          :tableSchema="{ uiSchema, columnSchema }"
+          :tableChoice="[]"
+          :tableData="data"
+          :total="total"
         >
         </mg-table>
       </div>
@@ -65,52 +65,21 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { onMounted, unref, computed, ref } from "@vue/composition-api";
+import {
+  onMounted,
+  watchEffect,
+  unref,
+  computed,
+  ref,
+} from "@vue/composition-api";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 import {
   useSearchConfig,
   useListConfig,
+  useDataSource,
 } from "@/biz/Template/usecase/usePackage";
 import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
-
-const TestData = {
-  total: 107,
-  data: [],
-};
-
-for (let index = 0; index < 20; index++) {
-  const number = Math.random();
-  const choice = number > 0.5 ? true : false;
-
-  TestData.data.push({
-    rowpower: choice ? "back" : "check",
-    submittime: "2021-04-06 00:00:00",
-    allusers: number,
-    userid: number,
-    checkresult: "0820",
-    projno: "123",
-    allusersname: "系统管理员",
-    endtime: "2021-06-30 00:00:00",
-    birth: "2020-12-01 00:00:00",
-    submitman: 10000,
-    projsourcesname: "市财政",
-    starttime: "2021-04-06 00:00:00",
-    submitmanname: "系统管理员",
-    inhome: "001",
-    checkresultname: "呼吸所办公室审核",
-    projtype: "01",
-    inhomename: "北京市呼吸疾病研究所",
-    name: "测试项目",
-    projecttype: "01",
-    checktableid: 10,
-    id: 10,
-    projtotalfunding: 120.64,
-    projtypename: "临床研究",
-    projsources: "01",
-    useridname: "系统管理员",
-  });
-}
 
 export default {
   name: "BizCurd",
@@ -125,8 +94,9 @@ export default {
 
     const searchConfig = useSearchConfig();
     const listConfig = useListConfig();
+    const dataSource = useDataSource();
 
-    const loading = computed(() => {
+    const actionReady = computed(() => {
       return !unref(listConfig.load) && !unref(searchConfig.load);
     });
     const className = computed(() => {
@@ -135,19 +105,29 @@ export default {
         : ["biz-curd-body-list-only"];
     });
 
+    watchEffect(async () => {
+      console.log(unref(actionReady));
+      if (unref(actionReady)) return;
+
+      // TODO... params data
+      await dataSource.send();
+    });
     onMounted(async () => {
-      await Promise.allSettled([searchConfig.send(), listConfig.send()]);
+      await Promise.allSettled([
+        searchConfig.send(config),
+        listConfig.send(config),
+      ]);
       resizeTable.value = Date.now();
     });
 
     return {
       resizeTable,
       config,
-      loading,
       className,
+      loading: dataSource.load,
       ...listConfig.data,
       ...searchConfig.data,
-      TestData,
+      ...dataSource.data,
     };
   },
 };

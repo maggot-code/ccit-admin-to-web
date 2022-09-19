@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 13:54:21
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 13:54:30
+ * @LastEditTime: 2022-09-19 13:19:37
  * @Description:
  */
 import { ref, shallowRef, unref, computed } from "@vue/composition-api";
@@ -16,11 +16,11 @@ export function Service(request) {
   const load = computed(() => {
     return !unref(isPending) && unref(isFinished) && unref(usableResult);
   });
-  async function execute() {
+  async function execute(options) {
     signal(true);
     // request;
     return new Promise((resolve, reject) =>
-      request()
+      request(options)
         .then(async (response) => {
           result.value = response;
           return resolve(response);

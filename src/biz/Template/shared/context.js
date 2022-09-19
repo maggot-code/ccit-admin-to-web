@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-13 13:52:45
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 10:06:53
+ * @LastEditTime: 2022-09-19 13:25:23
  * @Description:
  */
 // 模板参数注入关键字
@@ -17,3 +17,5 @@ export const SearchConfigSymbolKey = Symbol("SearchConfig");
 export const ListConfigSymbolKey = Symbol("ListConfig");
 // 数据配置服务注入关键字
 export const DataConfigSymbolKey = Symbol("DataConfig");
+// 数据源服务注入关键字
+export const DataSourceSymbolKey = Symbol("DataSource");
