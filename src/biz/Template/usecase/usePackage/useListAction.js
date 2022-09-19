@@ -3,10 +3,18 @@
  * @Author: maggot-code
  * @Date: 2022-09-19 13:44:56
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 15:18:02
+ * @LastEditTime: 2022-09-19 16:50:52
  * @Description:
  */
-import { unref, ref, shallowRef, computed } from "@vue/composition-api";
+import {
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  unref,
+  ref,
+  shallowRef,
+  computed,
+} from "@vue/composition-api";
 
 export function useListAction(options) {
   const { config } = options;
@@ -46,6 +54,14 @@ export function useListAction(options) {
   function handleAllControll(target) {
     console.log("action to handle all controll", target);
   }
+
+  onMounted(async () => {
+    config.startLoad();
+
+    await nextTick();
+    config.endLoad();
+  });
+  onBeforeUnmount(config.startLoad);
 
   const data = {
     listRefs,

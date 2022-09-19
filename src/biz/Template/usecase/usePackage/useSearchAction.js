@@ -3,18 +3,21 @@
  * @Author: maggot-code
  * @Date: 2022-09-19 13:44:48
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 14:43:37
+ * @LastEditTime: 2022-09-19 16:49:28
  * @Description:
  */
 import {
-  watchEffect,
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  watch,
   unref,
   ref,
   shallowRef,
   computed,
 } from "@vue/composition-api";
 
-function toQuery(rawQuery) {
+function serializeQuery(rawQuery) {
   const query = {};
 
   Object.keys(rawQuery).forEach((field) => {
@@ -34,33 +37,53 @@ function toQuery(rawQuery) {
 }
 
 export function useSearchAction(options) {
-  const { config } = options;
+  const { config, listConfig } = options;
+
+  let actionToQuery = () => {};
+  let actionToReset = () => {};
 
   const formData = shallowRef({});
   const searchRefs = ref();
   const searchData = computed(() => {
-    return toQuery(unref(formData));
+    return serializeQuery(unref(formData));
   });
 
   function setupFormData() {
     // validate
     const { data } = unref(searchRefs).formOutput();
     formData.value = data;
+    return data;
   }
   function handlerQuery() {
+    listConfig.handlerResetCurrentPage();
     setupFormData();
+    actionToQuery();
   }
   function handlerReset() {
     unref(searchRefs).resetForm();
     setupFormData();
     // run handler query to select
+    actionToReset();
+  }
+  function toQuery(toHandler) {
+    actionToQuery = toHandler;
+  }
+  function toReset(toHandler) {
+    actionToReset = toHandler;
   }
 
-  watchEffect(() => {
-    if (!unref(config.load)) return;
+  watch(config.load, (state) => {
+    if (!unref(state)) return;
 
     setupFormData();
   });
+  onMounted(async () => {
+    config.startLoad();
+
+    await nextTick();
+    config.endLoad();
+  });
+  onBeforeUnmount(config.startLoad);
 
   const data = {
     searchRefs,
@@ -71,6 +94,8 @@ export function useSearchAction(options) {
     ...data,
     data,
     searchData,
+    toQuery,
+    toReset,
   };
 }
 

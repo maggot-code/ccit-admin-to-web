@@ -3,10 +3,10 @@
  * @Author: maggot-code
  * @Date: 2022-09-19 13:23:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 15:17:39
+ * @LastEditTime: 2022-09-19 16:20:17
  * @Description:
  */
-import { inject } from "@vue/composition-api";
+import { inject, unref } from "@vue/composition-api";
 import { DataSourceSymbolKey } from "@/biz/Template/shared/context";
 import { Service } from "@/biz/shared/service";
 
@@ -15,6 +15,7 @@ import { mockRequest } from "@/biz/shared/mock";
 const ServiceAddress = "/api/biz/data/source";
 
 function BizDataSource({ params, data }) {
+  console.log(params, data);
   // axios
   // return request({})
   const Response = {
@@ -61,9 +62,11 @@ export function DataSourceService() {
   const request = inject(DataSourceSymbolKey, BizDataSource);
 
   const service = Service(request);
-  function send(params, data) {
-    console.log(params, data);
-    return service.execute({ params, data });
+  function send(list, search) {
+    return service.execute({
+      params: unref(list.listParams),
+      data: unref(search.searchData),
+    });
   }
 
   // not return TODO ...
