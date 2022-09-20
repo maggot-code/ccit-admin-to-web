@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 14:16:54
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 11:34:45
+ * @LastEditTime: 2022-09-20 17:37:09
  * @Description: 
 -->
 <template>
@@ -50,11 +50,11 @@ import {
   unref,
 } from "@vue/composition-api";
 import {
-  TmpParamsSymbolKey,
-  TmpDialogSymbolKey,
-} from "@/biz/Template/shared/context";
-import { useRouterQuery } from "@/biz/Template/usecase/useRouterQuery";
-import { useState } from "@/biz/Template/usecase/useState";
+  ParamsSymbolKey,
+  DialogSymbolKey,
+  useRouterQuery,
+  useState,
+} from "@/biz/Tmp/Shared";
 import { defineDialog } from "@/biz/Dialog/usecase/defineDialog";
 
 export default {
@@ -64,13 +64,13 @@ export default {
   },
   props: {},
   setup(props, { root }) {
-    const dialog = defineDialog({ namespace: TmpDialogSymbolKey });
+    const dialog = defineDialog({ namespace: DialogSymbolKey });
 
     const { $route, $router } = root;
     const { gather, hasGather } = useRouterQuery($route, $router);
     const { state, setupState } = useState({ state: false });
 
-    provide(TmpParamsSymbolKey, gather);
+    provide(ParamsSymbolKey, gather);
 
     watchEffect(() => {
       if (!unref(hasGather)) {

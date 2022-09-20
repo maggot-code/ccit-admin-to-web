@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Template\usecase\useRouterQuery.js
+ * @FilePath: \ccit-admin-to-web\src\biz\Tmp\Shared\usecase\useRouterQuery.js
  * @Author: maggot-code
- * @Date: 2022-09-13 11:12:53
+ * @Date: 2022-09-20 17:35:27
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 13:08:59
+ * @LastEditTime: 2022-09-20 17:35:36
  * @Description:
  */
 import { computed } from "@vue/composition-api";

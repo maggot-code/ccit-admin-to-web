@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 09:35:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 13:08:42
+ * @LastEditTime: 2022-09-20 17:37:44
  * @Description: 
 -->
 <template>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
+import { DialogSymbolKey } from "@/biz/Tmp/Shared";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 export default {
   name: "BizUnknow",
@@ -22,7 +22,7 @@ export default {
   components: {},
   props: {},
   setup(props) {
-    const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
+    const { handler } = useDialog({ namespace: DialogSymbolKey });
     const a = ["50%", "70%", "200px"];
     function handleraa() {
       // 随机获取a

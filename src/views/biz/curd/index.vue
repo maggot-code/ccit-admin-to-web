@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 17:22:42
+ * @LastEditTime: 2022-09-20 17:34:00
  * @Description: 
 -->
 <template>
@@ -80,7 +80,7 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
+import { useParams } from "@/biz/Tmp/Shared";
 import { defineSearch, useSearch } from "@/biz/Tmp/Search";
 import { defineList, useList } from "@/biz/Tmp/List";
 import {
@@ -96,7 +96,7 @@ export default {
   },
   props: {},
   setup(props) {
-    const params = useTmpParams();
+    const params = useParams();
     const search = defineSearch({ params });
     const list = defineList({ params });
     const data = defineDataSource({ params });
