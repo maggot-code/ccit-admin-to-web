@@ -3,12 +3,11 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:48:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:51:38
+ * @LastEditTime: 2022-09-20 14:00:48
  * @Description:
  */
 export function useList(options) {
   const { params, search, list } = options;
-  console.log(params, search, list);
 
   return {};
 }

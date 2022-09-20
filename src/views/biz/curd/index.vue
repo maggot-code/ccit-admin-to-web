@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:52:21
+ * @LastEditTime: 2022-09-20 14:23:22
  * @Description: 
 -->
 <template>
@@ -20,11 +20,7 @@
           ></mg-form>
         </template>
         <template #toggle-btn>
-          <el-button
-            size="mini"
-            icon="el-icon-search"
-            type="primary"
-            @click="handlerQuery"
+          <el-button size="mini" icon="el-icon-search" type="primary"
             >查询</el-button
           >
           <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
@@ -43,7 +39,6 @@
               :type="control.type"
               :icon="control.icon"
               size="mini"
-              @click="handleAllControll(control)"
             >
               {{ control.label }}
             </el-button>
@@ -62,9 +57,9 @@
           :resizeTable="resizeTable"
           :controller="rowController"
           :tableSchema="{ uiSchema, columnSchema }"
-          :tableChoice="[]"
-          :tableData="[]"
-          :total="0"
+          :tableChoice="choice"
+          :tableData="data"
+          :total="total"
         >
         </mg-table>
       </div>
@@ -78,13 +73,13 @@ import ToggleLayout from "@/components/Toggle/toggle.vue";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { defineSearch, useSearch } from "@/biz/Tmp/Search";
 import { defineList, useList } from "@/biz/Tmp/List";
+import { defineDataSource, useDataSource } from "@/biz/Tmp/DataSource";
 
 import {
   onMounted,
   onBeforeUnmount,
   nextTick,
   watch,
-  unref,
 } from "@vue/composition-api";
 export default {
   name: "BizCurd",
@@ -96,20 +91,21 @@ export default {
     const params = useTmpParams();
     const search = defineSearch({ params });
     const list = defineList({ params });
-    const { handlerQuery } = useSearch({ params, search, list });
-    useList({ params, search, list });
+    const data = defineDataSource({ params });
+
+    const utensil = { params, search, list, data };
+    useSearch(utensil);
+    useList(utensil);
+    useDataSource(utensil);
 
     onMounted(async () => {
-      const res = await Promise.allSettled([search.send(), list.send()]);
-      console.log(res);
+      await Promise.allSettled([search.send(), list.send()]);
     });
-
-    onBeforeUnmount(() => {});
 
     return {
       ...search.template,
       ...list.template,
-      handlerQuery,
+      ...data.template,
     };
   },
 };
