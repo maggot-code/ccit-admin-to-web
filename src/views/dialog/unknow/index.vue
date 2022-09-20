@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { DialogSymbolKey } from "@/biz/Tmp/Shared";
+import { DialogSymbolKey } from "@/biz/Template/Shared";
 import { useDialog } from "@/biz/Dialog/usecase/useDialog";
 export default {
   name: "BizUnknow",

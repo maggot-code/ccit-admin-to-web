@@ -54,7 +54,7 @@ import {
   DialogSymbolKey,
   useRouterQuery,
   useState,
-} from "@/biz/Tmp/Shared";
+} from "@/biz/Template/Shared";
 import { defineDialog } from "@/biz/Dialog/usecase/defineDialog";
 
 export default {

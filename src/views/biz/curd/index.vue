@@ -80,14 +80,14 @@
 <script>
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
-import { useParams } from "@/biz/Tmp/Shared";
-import { defineSearch, useSearch } from "@/biz/Tmp/Search";
-import { defineList, useList } from "@/biz/Tmp/List";
+import { useParams } from "@/biz/Template/Shared";
+import { defineSearch, useSearch } from "@/biz/Template/Search";
+import { defineList, useList } from "@/biz/Template/List";
 import {
   defineDataSource,
   useDataSource,
   useDataAction,
-} from "@/biz/Tmp/DataSource";
+} from "@/biz/Template/DataSource";
 
 export default {
   name: "BizCurd",
