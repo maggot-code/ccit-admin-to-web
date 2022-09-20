@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 11:15:34
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 11:25:36
+ * @LastEditTime: 2022-09-20 13:46:47
  * @Description:
  */
 import { ref } from "@vue/composition-api";
@@ -29,12 +29,16 @@ export function Table() {
   function toNotReady() {
     isReady.value = false;
   }
+  function setup(response) {
+    keyname.value = response?.keyname ?? "key";
+  }
 
   return {
     isReady,
     refs,
     keyname,
     other,
+    setup,
     toReady,
     toNotReady,
   };

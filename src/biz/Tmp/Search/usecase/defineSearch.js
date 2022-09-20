@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 09:49:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:37:54
+ * @LastEditTime: 2022-09-20 13:50:23
  * @Description:
  */
 import { onBeforeUnmount, inject, unref } from "@vue/composition-api";
@@ -37,14 +37,14 @@ function toSend(struct, params, form) {
 }
 
 export function defineSearch(options) {
-  const { tmpParams } = options;
+  const { params } = options;
   const searchRequest = inject("searchRequest", request);
 
   const struct = ConfigService(searchRequest);
   const form = defineForm();
 
   const unwatchState = toState(struct, form.form);
-  const send = toSend(struct, tmpParams, form);
+  const send = toSend(struct, params, form);
 
   onBeforeUnmount(unwatchState);
 

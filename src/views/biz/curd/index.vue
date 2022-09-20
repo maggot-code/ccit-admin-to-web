@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:33:23
+ * @LastEditTime: 2022-09-20 13:52:21
  * @Description: 
 -->
 <template>
@@ -77,7 +77,7 @@ import ToggleLayout from "@/components/Toggle/toggle.vue";
 
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { defineSearch, useSearch } from "@/biz/Tmp/Search";
-import { defineList } from "@/biz/Tmp/List";
+import { defineList, useList } from "@/biz/Tmp/List";
 
 import {
   onMounted,
@@ -93,10 +93,11 @@ export default {
   },
   props: {},
   setup(props) {
-    const tmpParams = useTmpParams();
-    const search = defineSearch({ tmpParams });
-    const list = defineList({ tmpParams });
-    const { handlerQuery } = useSearch({ tmpParams, search });
+    const params = useTmpParams();
+    const search = defineSearch({ params });
+    const list = defineList({ params });
+    const { handlerQuery } = useSearch({ params, search, list });
+    useList({ params, search, list });
 
     onMounted(async () => {
       const res = await Promise.allSettled([search.send(), list.send()]);

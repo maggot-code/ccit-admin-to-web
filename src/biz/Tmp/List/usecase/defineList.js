@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:08:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:37:37
+ * @LastEditTime: 2022-09-20 13:50:37
  * @Description:
  */
 import { onBeforeUnmount, inject, unref } from "@vue/composition-api";
@@ -19,6 +19,7 @@ function toSend(struct, params, table) {
 
     table.schema.setup(response);
     table.control.setup(response);
+    table.table.setup(response);
     return response;
   }
 
@@ -26,14 +27,14 @@ function toSend(struct, params, table) {
 }
 
 export function defineList(options) {
-  const { tmpParams } = options;
+  const { params } = options;
   const listRequest = inject("listRequest", request);
 
   const struct = ConfigService(listRequest);
   const table = defineTable();
 
   const unwatchState = toState(struct, table.table);
-  const send = toSend(struct, tmpParams, table);
+  const send = toSend(struct, params, table);
 
   onBeforeUnmount(unwatchState);
 
