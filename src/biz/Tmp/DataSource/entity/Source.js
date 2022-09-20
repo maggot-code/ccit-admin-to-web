@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 14:09:46
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:24:23
+ * @LastEditTime: 2022-09-20 14:30:08
  * @Description:
  */
 import { unref, computed, ref } from "@vue/composition-api";
@@ -25,13 +25,15 @@ export function Source() {
   const choice = ChoiceSchema();
   const data = DataSchema();
   const total = ref(0);
-  const choiceSchema = computed(() => unref(choice.data));
   const dataSchema = computed(() => unref(data.data));
+  const choiceSchema = computed(() => unref(choice.data));
 
   function setup(response) {
-    choice.setup(response?.choiceSchema);
-    data.setup(response?.dataSchema);
-    total.value = response?.total;
+    const rawData = response?.data ?? [];
+    const rawChoice = [];
+    data.setup(rawData);
+    choice.setup(rawChoice);
+    total.value = response?.total ?? 0;
   }
 
   return {

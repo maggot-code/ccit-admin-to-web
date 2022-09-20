@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:23:22
+ * @LastEditTime: 2022-09-20 14:32:45
  * @Description: 
 -->
 <template>
@@ -100,6 +100,9 @@ export default {
 
     onMounted(async () => {
       await Promise.allSettled([search.send(), list.send()]);
+
+      await data.send();
+      list.control.resize.refresh();
     });
 
     return {

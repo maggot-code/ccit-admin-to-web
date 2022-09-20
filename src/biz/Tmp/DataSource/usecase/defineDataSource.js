@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:59:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:22:17
+ * @LastEditTime: 2022-09-20 14:29:30
  * @Description:
  */
 import { inject, unref } from "@vue/composition-api";
@@ -16,7 +16,7 @@ function toSend(struct, params, source) {
     const response = await struct.execute(params.config);
     if (unref(struct.isReject)) return null;
 
-    source.setup(toSchema(response));
+    source.setup(response);
     return response;
   }
 
