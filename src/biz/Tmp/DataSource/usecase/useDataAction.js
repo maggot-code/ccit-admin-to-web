@@ -3,19 +3,57 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 14:36:30
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 15:04:25
+ * @LastEditTime: 2022-09-20 17:27:51
  * @Description:
  */
-export function useDataAction(options) {
-  const { list } = options;
-  const { table } = list;
+import { onUnmounted, unref } from "@vue/composition-api";
+import { createEventHook } from "@vueuse/core";
 
-  function tableHandle(target) {
-    table.data.setup(target);
+export function useDataAction(options, context) {
+  const { list } = options;
+  const { body, query, setupBody, resetBody } = context;
+  const { table, isFirstPage, control } = list;
+  const requestEvent = createEventHook();
+  function uncontext() {
+    return {
+      body: unref(body),
+      query: unref(query),
+    };
   }
 
-  return {
+  function tableParams(target) {
+    table.data.setup(target);
+  }
+  function tableHandle(target) {
+    setupBody();
+    table.data.setup(target);
+
+    requestEvent.trigger(uncontext());
+  }
+  function searchQuery() {
+    if (unref(isFirstPage)) {
+      setupBody();
+      requestEvent.trigger(uncontext());
+    } else {
+      control.reset.refresh();
+    }
+  }
+  function searchReset() {
+    resetBody();
+  }
+
+  onUnmounted(() => {
+    requestEvent.off();
+  });
+  const template = {
+    tableParams,
     tableHandle,
+    searchQuery,
+    searchReset,
+  };
+  return {
+    template,
+    onRequest: requestEvent.on,
   };
 }
 

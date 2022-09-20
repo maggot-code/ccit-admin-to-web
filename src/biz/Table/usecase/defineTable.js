@@ -3,10 +3,10 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 11:13:10
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 15:43:39
+ * @LastEditTime: 2022-09-20 17:26:34
  * @Description:
  */
-import { onBeforeUnmount, watch, unref } from "@vue/composition-api";
+import { onBeforeUnmount, watch, unref, computed } from "@vue/composition-api";
 
 import Table from "../entity/Table";
 import Control from "../entity/Control";
@@ -23,6 +23,9 @@ export function defineTable() {
   const table = Table();
   const control = Control();
   const schema = Schema();
+  const isFirstPage = computed(() => {
+    return unref(table.data.data)?.current == 1;
+  });
 
   const unwatch = watch(schema.uiSchema, (response) => {
     table.data.setup({
@@ -55,6 +58,7 @@ export function defineTable() {
     table,
     control,
     schema,
+    isFirstPage,
   };
 }
 

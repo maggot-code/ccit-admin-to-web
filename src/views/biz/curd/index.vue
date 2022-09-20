@@ -3,11 +3,11 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 15:31:17
+ * @LastEditTime: 2022-09-20 17:22:42
  * @Description: 
 -->
 <template>
-  <div class="biz biz-curd">
+  <div class="biz biz-curd" v-loading="loading">
     <div class="biz-curd-search" v-if="formReady">
       <ToggleLayout>
         <template #toggle-form>
@@ -20,10 +20,18 @@
           ></mg-form>
         </template>
         <template #toggle-btn>
-          <el-button size="mini" icon="el-icon-search" type="primary"
+          <el-button
+            size="mini"
+            icon="el-icon-search"
+            type="primary"
+            @click="searchQuery"
             >查询</el-button
           >
-          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
+          <el-button
+            size="mini"
+            icon="el-icon-refresh-right"
+            :plain="true"
+            @click="searchReset"
             >重置</el-button
           >
         </template>
@@ -61,7 +69,7 @@
           :tableData="data"
           :total="total"
           @tableHandle="tableHandle"
-          @tableParams="tableHandle"
+          @tableParams="tableParams"
         >
         </mg-table>
       </div>
@@ -81,7 +89,6 @@ import {
   useDataAction,
 } from "@/biz/Tmp/DataSource";
 
-import { onMounted, nextTick, watch, unref } from "@vue/composition-api";
 export default {
   name: "BizCurd",
   components: {
@@ -95,21 +102,21 @@ export default {
     const data = defineDataSource({ params });
 
     const utensil = { params, search, list, data };
-    const { body } = useSearch(utensil);
+    const { body, setupBody, resetBody } = useSearch(utensil);
     const { query } = useList(utensil);
-    useDataSource(utensil, { body, query });
 
-    const action = useDataAction(utensil);
+    const context = { body, query, setupBody, resetBody };
+    const { setupData } = useDataSource(utensil, context);
+    const { template, onRequest } = useDataAction(utensil, context);
 
-    onMounted(async () => {
-      await Promise.allSettled([search.send(), list.send()]);
-    });
+    onRequest(setupData);
 
     return {
+      loading: data.loading,
       ...search.template,
       ...list.template,
       ...data.template,
-      ...action,
+      ...template,
     };
   },
 };

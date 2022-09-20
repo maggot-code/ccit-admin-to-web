@@ -3,10 +3,10 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:59:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 15:47:21
+ * @LastEditTime: 2022-09-20 16:51:55
  * @Description:
  */
-import { inject, unref } from "@vue/composition-api";
+import { inject, unref, computed } from "@vue/composition-api";
 
 import Source from "../entity/Source";
 import { DataService, request } from "../service/data.service";
@@ -31,6 +31,13 @@ export function defineDataSource(options) {
   const source = Source();
 
   const struct = DataService(dataRequest);
+  const loading = computed(() => {
+    return !(
+      unref(struct.isFinished) &&
+      !unref(struct.isPending) &&
+      !unref(struct.isReject)
+    );
+  });
 
   const send = toSend(struct, params, source);
 
@@ -42,6 +49,7 @@ export function defineDataSource(options) {
   return {
     source,
     struct,
+    loading,
     template,
     send,
   };

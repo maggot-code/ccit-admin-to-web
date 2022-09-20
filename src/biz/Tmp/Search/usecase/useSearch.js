@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 10:27:05
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 15:14:28
+ * @LastEditTime: 2022-09-20 17:22:19
  * @Description:
  */
 import {
@@ -43,16 +43,26 @@ export function useSearch(options) {
     if (!state) return;
 
     await nextTick();
-    const { data } = unref(form.refs).formOutput();
-    form.data.setup(data);
+    setupBody();
     unwatchBody();
   });
+
+  function setupBody() {
+    const { data } = unref(form.refs).formOutput();
+    form.data.setup(data);
+  }
+  function resetBody() {
+    unref(form.refs).resetForm();
+    setupBody();
+  }
 
   onBeforeUnmount(() => {
     unwatchBody();
   });
   return {
     body,
+    setupBody,
+    resetBody,
   };
 }
 
