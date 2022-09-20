@@ -1,13 +1,14 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Search\usecase\defineSearch.js
+ * @FilePath: \ccit-admin-to-web\src\biz\Tmp\Search\usecase\defineSearch.js
  * @Author: maggot-code
  * @Date: 2022-09-20 09:49:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 11:03:44
+ * @LastEditTime: 2022-09-20 13:37:54
  * @Description:
  */
-import { onBeforeUnmount, watch, inject, unref } from "@vue/composition-api";
+import { onBeforeUnmount, inject, unref } from "@vue/composition-api";
 import { defineForm } from "@/biz/Form";
+import { toState } from "@/biz/shared/service";
 
 import { ConfigService, request } from "../service/config.service";
 
@@ -21,20 +22,6 @@ function toSchema({ formSchema, cellSchema }) {
     formSchema: Object.assign({}, formSchema, formSchemaConstant),
     cellSchema,
   };
-}
-
-function toState(struct, form) {
-  const unwatch = watch(
-    [struct.isFinished, struct.isPending, struct.isReject],
-    ([finished, pending, reject]) => {
-      const state = finished && !pending && !reject;
-      if (!state) return;
-      form.form.toReady();
-      unwatch();
-    }
-  );
-
-  return unwatch;
 }
 
 function toSend(struct, params, form) {
@@ -56,7 +43,7 @@ export function defineSearch(options) {
   const struct = ConfigService(searchRequest);
   const form = defineForm();
 
-  const unwatchState = toState(struct, form);
+  const unwatchState = toState(struct, form.form);
   const send = toSend(struct, tmpParams, form);
 
   onBeforeUnmount(unwatchState);

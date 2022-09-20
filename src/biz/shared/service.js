@@ -3,10 +3,24 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 13:54:21
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 16:44:55
+ * @LastEditTime: 2022-09-20 13:30:09
  * @Description:
  */
-import { ref, shallowRef, unref, computed } from "@vue/composition-api";
+import { watch, ref, shallowRef, unref, computed } from "@vue/composition-api";
+
+export function toState(struct, target) {
+  const unwatch = watch(
+    [struct.isFinished, struct.isPending, struct.isReject],
+    ([finished, pending, reject]) => {
+      const state = finished && !pending && !reject;
+      if (!state) return;
+      target.toReady();
+      unwatch();
+    }
+  );
+
+  return unwatch;
+}
 
 export function Service(request) {
   const isState = ref(false);

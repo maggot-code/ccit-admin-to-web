@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 11:11:25
+ * @LastEditTime: 2022-09-20 13:33:23
  * @Description: 
 -->
 <template>
@@ -33,6 +33,42 @@
         </template>
       </ToggleLayout>
     </div>
+
+    <div class="biz-curd-body" v-if="tableReady">
+      <div class="biz-curd-body-function">
+        <el-button-group>
+          <template v-for="control in allController">
+            <el-button
+              :key="control.mode"
+              :type="control.type"
+              :icon="control.icon"
+              size="mini"
+              @click="handleAllControll(control)"
+            >
+              {{ control.label }}
+            </el-button>
+          </template>
+        </el-button-group>
+      </div>
+
+      <div class="biz-curd-body-list">
+        <!-- @rowEnter="rowEnter" -->
+        <!-- @rowLeave="rowLeave" -->
+        <mg-table
+          ref="tableRefs"
+          :loadPage="loadPage"
+          :defaultPageSize="defaultPageSize"
+          :resetCurrentPage="resetCurrentPage"
+          :resizeTable="resizeTable"
+          :controller="rowController"
+          :tableSchema="{ uiSchema, columnSchema }"
+          :tableChoice="[]"
+          :tableData="[]"
+          :total="0"
+        >
+        </mg-table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,7 +76,8 @@
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
-import { defineSearch, useSearch } from "@/biz/Search";
+import { defineSearch, useSearch } from "@/biz/Tmp/Search";
+import { defineList } from "@/biz/Tmp/List";
 
 import {
   onMounted,
@@ -58,16 +95,19 @@ export default {
   setup(props) {
     const tmpParams = useTmpParams();
     const search = defineSearch({ tmpParams });
+    const list = defineList({ tmpParams });
     const { handlerQuery } = useSearch({ tmpParams, search });
 
-    onMounted(() => {
-      search.send();
+    onMounted(async () => {
+      const res = await Promise.allSettled([search.send(), list.send()]);
+      console.log(res);
     });
 
     onBeforeUnmount(() => {});
 
     return {
       ...search.template,
+      ...list.template,
       handlerQuery,
     };
   },
