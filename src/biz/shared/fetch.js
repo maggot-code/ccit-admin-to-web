@@ -3,16 +3,16 @@
  * @Author: maggot-code
  * @Date: 2022-09-19 17:34:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 17:34:56
+ * @LastEditTime: 2022-09-20 10:22:58
  * @Description:
  */
 import { ref, shallowRef, unref, computed } from "@vue/composition-api";
 
 export function Fetch(request) {
+  const result = shallowRef(null);
+  const isReject = computed(() => !unref(result));
   const isFinished = ref(false);
   const isPending = ref(false);
-  const result = shallowRef(null);
-  const usableResult = computed(() => !!unref(result));
 
   async function execute(options) {
     signal(true);
@@ -25,6 +25,7 @@ export function Fetch(request) {
         })
         .catch(async (error) => {
           console.log(error);
+          result.value = null;
           return resolve(null);
         })
         .finally(() => {
@@ -39,10 +40,10 @@ export function Fetch(request) {
   }
 
   return {
+    result,
+    isReject,
     isFinished,
     isPending,
-    usableResult,
-    result,
     execute,
   };
 }

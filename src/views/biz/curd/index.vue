@@ -3,19 +3,19 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 18:20:21
+ * @LastEditTime: 2022-09-20 11:11:25
  * @Description: 
 -->
 <template>
   <div class="biz biz-curd">
-    <div class="biz-curd-search">
+    <div class="biz-curd-search" v-if="formReady">
       <ToggleLayout>
         <template #toggle-form>
           <mg-form
-            ref="searchRefs"
+            ref="formRefs"
             :token="token"
             :proName="proName"
-            :job="searchJob"
+            :job="formJob"
             :schema="{ formSchema, cellSchema }"
           ></mg-form>
         </template>
@@ -27,11 +27,7 @@
             @click="handlerQuery"
             >查询</el-button
           >
-          <el-button
-            size="mini"
-            icon="el-icon-refresh-right"
-            :plain="true"
-            @click="handlerReset"
+          <el-button size="mini" icon="el-icon-refresh-right" :plain="true"
             >重置</el-button
           >
         </template>
@@ -44,9 +40,15 @@
 import ToggleLayout from "@/components/Toggle/toggle.vue";
 
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
-import { defineSearch } from "@/biz/Search";
+import { defineSearch, useSearch } from "@/biz/Search";
 
-import {} from "@vue/composition-api";
+import {
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  watch,
+  unref,
+} from "@vue/composition-api";
 export default {
   name: "BizCurd",
   components: {
@@ -55,14 +57,18 @@ export default {
   props: {},
   setup(props) {
     const tmpParams = useTmpParams();
-    const search = defineSearch({
-      tmpParams,
+    const search = defineSearch({ tmpParams });
+    const { handlerQuery } = useSearch({ tmpParams, search });
+
+    onMounted(() => {
+      search.send();
     });
 
-    console.log(search);
+    onBeforeUnmount(() => {});
 
     return {
-      ...search.output,
+      ...search.template,
+      handlerQuery,
     };
   },
 };

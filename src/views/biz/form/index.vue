@@ -3,11 +3,12 @@
  * @Author: maggot-code
  * @Date: 2022-09-16 14:33:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-19 10:24:18
+ * @LastEditTime: 2022-09-20 09:47:26
  * @Description: 
 -->
 <template>
-  <div class="biz-form" v-loading="!loading">
+  <h1>biz form</h1>
+  <!-- <div class="biz-form" v-loading="!loading">
     <mg-form
       class="biz-form-core"
       ref="formRefs"
@@ -43,60 +44,16 @@
         >
       </template>
     </mg-form>
-  </div>
+  </div> -->
 </template>
 
 <script>
-import { onMounted, unref, ref } from "@vue/composition-api";
-import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
-import { useDialog } from "@/biz/Dialog/usecase/useDialog";
-import { useFormConfig } from "@/biz/Form/usecase/usePackage";
-import { TmpDialogSymbolKey } from "@/biz/Template/shared/context";
-
 export default {
   name: "BizForm",
   mixins: [],
   components: {},
   props: {},
-  setup(props) {
-    const formRefs = ref();
-    const { config } = useTmpParams();
-    // const { handler } = useDialog({ namespace: TmpDialogSymbolKey });
-
-    const formConfig = useFormConfig();
-
-    function handlerSubmit() {
-      const { validate, data } = unref(formRefs).formOutput();
-      validate()
-        .then((res) => {
-          console.log(res, data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    function handlerData() {
-      const { data } = unref(formRefs).formOutput();
-      console.log(data);
-    }
-    function handlerReset() {
-      unref(formRefs).resetForm();
-    }
-
-    onMounted(async () => {
-      await formConfig.send();
-    });
-
-    return {
-      loading: formConfig.load,
-      config,
-      formRefs,
-      ...formConfig.data,
-      handlerSubmit,
-      handlerData,
-      handlerReset,
-    };
-  },
+  setup(props) {},
 };
 </script>
 <style lang="scss" scoped>
