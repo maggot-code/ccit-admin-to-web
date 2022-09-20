@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 14:14:12
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:31:36
+ * @LastEditTime: 2022-09-20 15:49:53
  * @Description:
  */
 import Fetch from "@/biz/shared/fetch";
@@ -12,7 +12,8 @@ import { mockRequest } from "@/biz/shared/mock";
 
 const ServiceAddress = "/biz/list/data";
 
-export function request() {
+export function request(params) {
+  console.log(params.body, params.query);
   // axios
   const data = {
     data: [],

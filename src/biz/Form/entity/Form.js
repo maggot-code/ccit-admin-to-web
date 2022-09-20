@@ -3,10 +3,17 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 09:25:11
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 10:56:45
+ * @LastEditTime: 2022-09-20 14:40:54
  * @Description:
  */
 import { ref } from "@vue/composition-api";
+import SchemaFactory from "@/biz/shared/schema";
+
+function Data() {
+  const data = SchemaFactory({});
+
+  return data;
+}
 
 function Token() {
   const token = ref("");
@@ -27,6 +34,8 @@ export function Form() {
   const isReady = ref(false);
   const refs = ref();
   const other = Other();
+  const data = Data();
+
   function toReady() {
     isReady.value = true;
   }
@@ -38,6 +47,7 @@ export function Form() {
     isReady,
     refs,
     other,
+    data,
     toReady,
     toNotReady,
   };

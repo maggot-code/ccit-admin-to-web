@@ -3,21 +3,41 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 11:13:10
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:25:01
+ * @LastEditTime: 2022-09-20 15:43:39
  * @Description:
  */
-import { onBeforeUnmount } from "@vue/composition-api";
+import { onBeforeUnmount, watch, unref } from "@vue/composition-api";
 
 import Table from "../entity/Table";
 import Control from "../entity/Control";
 import Schema from "../entity/Schema";
+
+const order = {
+  ascending: "asc",
+  descending: "desc",
+  asc: "asc",
+  desc: "desc",
+};
 
 export function defineTable() {
   const table = Table();
   const control = Control();
   const schema = Schema();
 
-  onBeforeUnmount(table.toNotReady);
+  const unwatch = watch(schema.uiSchema, (response) => {
+    table.data.setup({
+      current: 1,
+      size: table.other.defaultPageSize,
+      prop: unref(table.keyname),
+      order: order[response?.sortOrder ?? "asc"],
+    });
+    unwatch();
+  });
+
+  onBeforeUnmount(() => {
+    unwatch();
+    table.toNotReady();
+  });
 
   const template = {
     ...table.other,

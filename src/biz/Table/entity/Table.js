@@ -3,10 +3,17 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 11:15:34
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:46:47
+ * @LastEditTime: 2022-09-20 15:36:57
  * @Description:
  */
 import { ref } from "@vue/composition-api";
+import SchemaFactory from "@/biz/shared/schema";
+
+function Data() {
+  const data = SchemaFactory({});
+
+  return data;
+}
 
 function Other() {
   const loadPage = false;
@@ -23,6 +30,8 @@ export function Table() {
   const refs = ref();
   const keyname = ref("key");
   const other = Other();
+  const data = Data();
+
   function toReady() {
     isReady.value = true;
   }
@@ -38,6 +47,7 @@ export function Table() {
     refs,
     keyname,
     other,
+    data,
     setup,
     toReady,
     toNotReady,

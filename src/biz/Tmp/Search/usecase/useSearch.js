@@ -3,18 +3,56 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 10:27:05
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:00:43
+ * @LastEditTime: 2022-09-20 15:14:28
  * @Description:
  */
-import { onMounted, unref } from "@vue/composition-api";
+import {
+  onBeforeUnmount,
+  nextTick,
+  watch,
+  unref,
+  computed,
+} from "@vue/composition-api";
+
+function serializeQuery(rawQuery) {
+  const query = {};
+
+  Object.keys(rawQuery).forEach((field) => {
+    const value = rawQuery[field];
+    if (
+      value === undefined ||
+      value === null ||
+      value === "" ||
+      value.length <= 0
+    )
+      return;
+
+    query[field] = value;
+  });
+
+  return Object.keys(query).length <= 0 ? { searchnoquery: "no" } : query;
+}
 
 export function useSearch(options) {
-  const { params, search, list } = options;
+  const { search } = options;
+  const { form } = search;
 
-  function handlerQuery() {}
+  const body = computed(() => serializeQuery(unref(form.data.data)));
 
+  const unwatchBody = watch(form.isReady, async (state) => {
+    if (!state) return;
+
+    await nextTick();
+    const { data } = unref(form.refs).formOutput();
+    form.data.setup(data);
+    unwatchBody();
+  });
+
+  onBeforeUnmount(() => {
+    unwatchBody();
+  });
   return {
-    handlerQuery,
+    body,
   };
 }
 

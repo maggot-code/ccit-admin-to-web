@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:59:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:29:30
+ * @LastEditTime: 2022-09-20 15:47:21
  * @Description:
  */
 import { inject, unref } from "@vue/composition-api";
@@ -12,8 +12,10 @@ import Source from "../entity/Source";
 import { DataService, request } from "../service/data.service";
 
 function toSend(struct, params, source) {
-  async function send() {
-    const response = await struct.execute(params.config);
+  async function send(extend = {}) {
+    const response = await struct.execute(
+      Object.assign({}, params.config, extend)
+    );
     if (unref(struct.isReject)) return null;
 
     source.setup(response);

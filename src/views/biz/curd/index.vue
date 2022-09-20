@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:32:45
+ * @LastEditTime: 2022-09-20 15:31:17
  * @Description: 
 -->
 <template>
@@ -60,6 +60,8 @@
           :tableChoice="choice"
           :tableData="data"
           :total="total"
+          @tableHandle="tableHandle"
+          @tableParams="tableHandle"
         >
         </mg-table>
       </div>
@@ -73,14 +75,13 @@ import ToggleLayout from "@/components/Toggle/toggle.vue";
 import { useTmpParams } from "@/biz/Template/usecase/useTmpParams";
 import { defineSearch, useSearch } from "@/biz/Tmp/Search";
 import { defineList, useList } from "@/biz/Tmp/List";
-import { defineDataSource, useDataSource } from "@/biz/Tmp/DataSource";
-
 import {
-  onMounted,
-  onBeforeUnmount,
-  nextTick,
-  watch,
-} from "@vue/composition-api";
+  defineDataSource,
+  useDataSource,
+  useDataAction,
+} from "@/biz/Tmp/DataSource";
+
+import { onMounted, nextTick, watch, unref } from "@vue/composition-api";
 export default {
   name: "BizCurd",
   components: {
@@ -94,21 +95,21 @@ export default {
     const data = defineDataSource({ params });
 
     const utensil = { params, search, list, data };
-    useSearch(utensil);
-    useList(utensil);
-    useDataSource(utensil);
+    const { body } = useSearch(utensil);
+    const { query } = useList(utensil);
+    useDataSource(utensil, { body, query });
+
+    const action = useDataAction(utensil);
 
     onMounted(async () => {
       await Promise.allSettled([search.send(), list.send()]);
-
-      await data.send();
-      list.control.resize.refresh();
     });
 
     return {
       ...search.template,
       ...list.template,
       ...data.template,
+      ...action,
     };
   },
 };

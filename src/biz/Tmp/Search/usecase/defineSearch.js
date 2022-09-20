@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 09:49:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:50:23
+ * @LastEditTime: 2022-09-20 15:46:35
  * @Description:
  */
 import { onBeforeUnmount, inject, unref } from "@vue/composition-api";
@@ -25,8 +25,10 @@ function toSchema({ formSchema, cellSchema }) {
 }
 
 function toSend(struct, params, form) {
-  async function send() {
-    const response = await struct.execute(params.config);
+  async function send(extend = {}) {
+    const response = await struct.execute(
+      Object.assign({}, params.config, extend)
+    );
     if (unref(struct.isReject)) return null;
 
     form.schema.setup(toSchema(response));

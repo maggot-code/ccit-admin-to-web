@@ -3,13 +3,20 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 13:48:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 14:00:48
+ * @LastEditTime: 2022-09-20 15:04:48
  * @Description:
  */
-export function useList(options) {
-  const { params, search, list } = options;
+import { nextTick, watch, unref, computed } from "@vue/composition-api";
 
-  return {};
+export function useList(options) {
+  const { list } = options;
+  const { table } = list;
+
+  const query = computed(() => unref(table.data.data));
+
+  return {
+    query,
+  };
 }
 
 export default useList;
