@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Tmp\Search\usecase\useSearch.js
+ * @FilePath: \ccit-web-kit\src\biz\Template\Search\usecase\useSearch.js
  * @Author: maggot-code
  * @Date: 2022-09-20 10:27:05
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 17:22:19
+ * @LastEditTime: 2022-09-21 14:24:55
  * @Description:
  */
 import {
@@ -43,26 +43,15 @@ export function useSearch(options) {
     if (!state) return;
 
     await nextTick();
-    setupBody();
+    search.setupFormData(false);
     unwatchBody();
   });
-
-  function setupBody() {
-    const { data } = unref(form.refs).formOutput();
-    form.data.setup(data);
-  }
-  function resetBody() {
-    unref(form.refs).resetForm();
-    setupBody();
-  }
 
   onBeforeUnmount(() => {
     unwatchBody();
   });
   return {
-    body,
-    setupBody,
-    resetBody,
+    body
   };
 }
 

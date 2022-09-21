@@ -1,9 +1,9 @@
 <!--
- * @FilePath: \ccit-admin-to-web\src\views\biz\curd\index.vue
+ * @FilePath: \ccit-web-kit\src\views\biz\curd\index.vue
  * @Author: maggot-code
  * @Date: 2022-09-08 13:28:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 17:34:00
+ * @LastEditTime: 2022-09-21 14:21:39
  * @Description: 
 -->
 <template>
@@ -102,10 +102,10 @@ export default {
     const data = defineDataSource({ params });
 
     const utensil = { params, search, list, data };
-    const { body, setupBody, resetBody } = useSearch(utensil);
+    const { body } = useSearch(utensil);
     const { query } = useList(utensil);
 
-    const context = { body, query, setupBody, resetBody };
+    const context = { body, query };
     const { setupData } = useDataSource(utensil, context);
     const { template, onRequest } = useDataAction(utensil, context);
 

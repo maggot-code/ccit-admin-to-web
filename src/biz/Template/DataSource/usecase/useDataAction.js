@@ -1,17 +1,18 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Tmp\DataSource\usecase\useDataAction.js
+ * @FilePath: \ccit-web-kit\src\biz\Template\DataSource\usecase\useDataAction.js
  * @Author: maggot-code
  * @Date: 2022-09-20 14:36:30
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 17:27:51
+ * @LastEditTime: 2022-09-21 14:25:59
  * @Description:
  */
 import { onUnmounted, unref } from "@vue/composition-api";
 import { createEventHook } from "@vueuse/core";
 
 export function useDataAction(options, context) {
-  const { list } = options;
-  const { body, query, setupBody, resetBody } = context;
+  const { search, list } = options;
+  const { body, query } = context;
+  const {form} = search;
   const { table, isFirstPage, control } = list;
   const requestEvent = createEventHook();
   function uncontext() {
@@ -25,21 +26,21 @@ export function useDataAction(options, context) {
     table.data.setup(target);
   }
   function tableHandle(target) {
-    setupBody();
+    search.setupFormData(false);
     table.data.setup(target);
 
     requestEvent.trigger(uncontext());
   }
   function searchQuery() {
     if (unref(isFirstPage)) {
-      setupBody();
+      search.setupFormData(false);
       requestEvent.trigger(uncontext());
     } else {
       control.reset.refresh();
     }
   }
   function searchReset() {
-    resetBody();
+    search.resetFormData();
   }
 
   onUnmounted(() => {

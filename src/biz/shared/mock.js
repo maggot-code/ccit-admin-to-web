@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\shared\mock.js
+ * @FilePath: \ccit-web-kit\src\biz\shared\mock.js
  * @Author: maggot-code
  * @Date: 2022-09-13 13:34:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-13 14:47:13
+ * @LastEditTime: 2022-09-21 14:27:33
  * @Description:
  */
 const requestQueue = new WeakMap();
@@ -19,8 +19,8 @@ export function mockRequest(url, response) {
   const key = { url };
   removeRequest(key);
 
-  // 随机 2-5 秒
-  const delayed = Math.floor(Math.random() * 3000 + 2000);
+  // 随机 0.5-2 秒
+  const delayed = Math.floor(Math.random() * 1500) + 500;
   // 随机true或false
   // const success = Math.random() > 0.5;
 

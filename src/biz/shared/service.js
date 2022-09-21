@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\shared\service.js
+ * @FilePath: \ccit-web-kit\src\biz\shared\service.js
  * @Author: maggot-code
  * @Date: 2022-09-16 13:54:21
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 13:30:09
+ * @LastEditTime: 2022-09-21 13:45:16
  * @Description:
  */
 import { watch, ref, shallowRef, unref, computed } from "@vue/composition-api";
@@ -20,6 +20,13 @@ export function toState(struct, target) {
   );
 
   return unwatch;
+}
+
+export function toLoad(service) {
+  const { isFinished, isPending, isReject } = service;
+  return computed(() => {
+    return !(unref(isFinished) && !unref(isPending) && !unref(isReject));
+  });
 }
 
 export function Service(request) {
