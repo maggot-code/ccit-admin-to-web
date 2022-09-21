@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Tmp\DataSource\service\data.service.js
+ * @FilePath: \ccit-web-kit\src\biz\Template\DataSource\service\data.service.js
  * @Author: maggot-code
  * @Date: 2022-09-20 14:14:12
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 16:48:34
+ * @LastEditTime: 2022-09-21 15:13:04
  * @Description:
  */
 import Fetch from "@/biz/shared/fetch";
@@ -25,7 +25,7 @@ export function request(params) {
     const choice = number > 0.5 ? true : false;
 
     data.data.push({
-      rowpower: choice ? "back" : "check",
+      rowpower: choice ? "back,check" : "check",
       submittime: "2021-04-06 00:00:00",
       allusers: number,
       userid: number,

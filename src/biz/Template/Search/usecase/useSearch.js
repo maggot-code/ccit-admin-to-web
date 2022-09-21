@@ -43,7 +43,7 @@ export function useSearch(options) {
     if (!state) return;
 
     await nextTick();
-    search.setupFormData(false);
+    search.setupData(false);
     unwatchBody();
   });
 

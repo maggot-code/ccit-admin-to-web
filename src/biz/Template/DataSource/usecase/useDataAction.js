@@ -26,21 +26,21 @@ export function useDataAction(options, context) {
     table.data.setup(target);
   }
   function tableHandle(target) {
-    search.setupFormData(false);
+    search.setupData(false);
     table.data.setup(target);
 
     requestEvent.trigger(uncontext());
   }
   function searchQuery() {
     if (unref(isFirstPage)) {
-      search.setupFormData(false);
+      search.setupData(false);
       requestEvent.trigger(uncontext());
     } else {
       control.reset.refresh();
     }
   }
   function searchReset() {
-    search.resetFormData();
+    search.resetData();
   }
 
   onUnmounted(() => {

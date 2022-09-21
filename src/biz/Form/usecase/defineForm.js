@@ -3,7 +3,7 @@
  * @Author: maggot-code
  * @Date: 2022-09-20 09:23:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-21 14:20:37
+ * @LastEditTime: 2022-09-21 15:28:51
  * @Description:
  */
 import { onBeforeUnmount, unref } from "@vue/composition-api";
@@ -17,7 +17,7 @@ export function defineForm() {
   const job = Job();
   const schema = Schema();
   
-  async function setupFormData(usecheck = false) {
+  async function setupData(usecheck = false) {
     const { validate, data } = unref(form.refs).formOutput();
     form.data.setup(data);
     
@@ -28,9 +28,9 @@ export function defineForm() {
     });
     return [check, data];
   }
-  async function resetFormData() {
+  async function resetData() {
     unref(form.refs).resetForm();
-    return setupFormData();
+    return setupData();
   }
 
   onBeforeUnmount(form.toNotReady);
@@ -48,8 +48,8 @@ export function defineForm() {
     form,
     job,
     schema,
-    setupFormData,
-    resetFormData,
+    setupData,
+    resetData,
   };
 }
 

@@ -8,7 +8,7 @@
             "ruleSchema": [],
             "mold": "text",
             "componentName": "mg-input",
-            "value": "22"
+            "value": ""
         },
         {
             "field": "searchstartstarttime",
@@ -68,7 +68,7 @@
             "ruleSchema": [],
             "mold": "default",
             "componentName": "mg-select",
-            "value": ""
+            "value": "01"
         }
     ]
 }

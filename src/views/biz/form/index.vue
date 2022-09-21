@@ -62,15 +62,15 @@ export default {
       return response;
     }
     async function formSubmit() {
-      const [state,data] = await form.setupFormData(true);
+      const [state,data] = await form.setupData(true);
       console.log(state,data);
     }
     async function formData() {
-      const [_, data] = await form.setupFormData(false);
+      const [_, data] = await form.setupData(false);
       console.log(data);
     }
     function formReset() {
-      form.resetFormData();
+      form.resetData();
     }
 
     onMounted(() => {
