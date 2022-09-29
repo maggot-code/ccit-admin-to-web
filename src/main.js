@@ -1,9 +1,9 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\main.js
+ * @FilePath: \ccit-web-kit\src\main.js
  * @Author: maggot-code
  * @Date: 2022-02-23 10:01:07
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-16 18:21:12
+ * @LastEditTime: 2022-09-29 14:12:24
  * @Description:
  */
 import Vue from "vue";
@@ -13,6 +13,7 @@ const ccit = require("./utils/ccit").default;
 
 import "normalize.css/normalize.css"; // a modern alternative to CSS resets
 import Element from "element-ui";
+import "maggot-form/lib/maggot-form.css";
 import "./styles/element-variables.scss";
 import "./assets/scss/common.scss";
 import "@/assets/fonts/ym-mobile/iconfont.js";

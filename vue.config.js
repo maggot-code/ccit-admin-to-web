@@ -63,6 +63,13 @@ module.exports = {
           "^/api/node": "",
         },
       },
+      "/SWZDH": {
+        target: "http://192.1.1.5:8080",
+        ws: true,
+        secure: false,
+        changeOrigin: true,
+        pathReWrite: { "^/SWZDH": "" },
+      },
     },
   },
   //配置多页面入口

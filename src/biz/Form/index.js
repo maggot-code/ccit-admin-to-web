@@ -1,9 +1,10 @@
 /*
- * @FilePath: \ccit-admin-to-web\src\biz\Core\Form\index.js
+ * @FilePath: \ccit-web-kit\src\biz\Form\index.js
  * @Author: maggot-code
  * @Date: 2022-09-20 09:23:43
  * @LastEditors: maggot-code
- * @LastEditTime: 2022-09-20 09:40:48
+ * @LastEditTime: 2022-09-28 17:37:49
  * @Description:
  */
 export * from "./usecase/defineForm";
+export * from "./usecase/useFormAction";
